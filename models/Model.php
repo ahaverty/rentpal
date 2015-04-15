@@ -20,6 +20,7 @@ class Model {
 	
 	// DAOs
 	private $appUserDao;
+	private $textRecordDao;
 	
 	// strings
 	public $appName = "";
@@ -43,6 +44,7 @@ class Model {
 		$this->daoFactory = new DaoFactory ();
 		$this->daoFactory->initDbResources ();
 		$this->appUserDao = $this->daoFactory->getAppUserDao ();
+		$this->textRecordDao = $this->daoFactory->getTextRecordDao ();
 		$this->authenticationFactory = new AuthenticationFactory ( $this->appUserDao );
 		$this->validationFactory = new ValidationFactory ();
 		$this->appName = APP_NAME;
