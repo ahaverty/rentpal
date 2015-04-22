@@ -94,28 +94,13 @@ class IndexController extends Controller {
 					$this->model->updateLoginStatus ();
 					$this->model->hasAuthenticationFailed = false;
 					
-					return;
+					$this->redirect("home.php");
 				}
 			}
 		}
 		$this->model->updateLoginErrorMessage ();
 		$this->model->hasAuthenticationFailed = true;
 		return;
-	}
-
-	/**
-	 * Logout the user
-	 */
-	function logoutUser() {
-		$this->model->logoutUser ();
-	}
-
-	/**
-	 * Update the header messages
-	 */
-	function updateHeader() {
-		if ($this->model->isUserLoggedIn ())
-			$this->model->updateLoginStatus ();
 	}
 
 }

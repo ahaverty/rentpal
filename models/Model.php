@@ -48,6 +48,7 @@ class Model {
 		$this->authenticationFactory = new AuthenticationFactory ( $this->appUserDao );
 		$this->validationFactory = new ValidationFactory ();
 		$this->appName = APP_NAME;
+		$this->baseUrl = BASE_URL;
 	}
 
 	/**

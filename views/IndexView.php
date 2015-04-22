@@ -26,7 +26,7 @@ class IndexView extends View {
 		
 		// if the user is logged in
 		if ($this->model->loginStatusString != null) {
-// 			$loginBox = "<a href='index.php?action=logout'>" . $this->model->loginStatusString . "</a>";
+			$loginBox = "<a href='index.php?action=logout'>" . $this->model->loginStatusString . "</a>";
 			
 // 			// list of options available to logged in user
 // 			$rightBox = "list of options for logged in user: to update";
@@ -64,7 +64,9 @@ class IndexView extends View {
 		}
 		
 		// include the index template that displays the variables set through the MVC in html form
-		include_once ("templates/template_index.php");
+		include_once 'templates/header.php';
+		include_once 'templates/pages/front.php';
+		include_once 'templates/footer.php';
 	}
 
 }

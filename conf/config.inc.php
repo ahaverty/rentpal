@@ -8,6 +8,7 @@ define ( "DB_NAME", "rentpal" );
 
 /* application constants */
 define ( "APP_NAME", "RentPal" );
+define ( "BASE_URL",  $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']) );
 
 /* new user form constants */
 define ( "NEW_USER_FORM_ERRORS_STR", "Errors exist in the form" );
