@@ -1,5 +1,4 @@
 <?php
-
 require_once 'View.php';
 
 /**
@@ -8,7 +7,12 @@ require_once 'View.php';
  * @author Alan
  */
 class HomeView extends View {
+	private $recordModel;
 
+	public function __construct($controller, $userModel, $recordModel) {
+		parent::__construct ( $controller, $userModel );
+		$this->recordModel = $recordModel;
+	}
 
 	/**
 	 * Outputs the model data
@@ -16,25 +20,32 @@ class HomeView extends View {
 	public function output() {
 		
 		// set variables up from the model (for the template)
-		$appName = $this->model->appName;
-		$baseUrl = $this->model->baseUrl;
-		$introMessage = $this->model->introMessage;
-		$newUserErrorMessage = $this->model->newUserErrorMessage;
+		$appName = $this->userModel->appName;
+		$baseUrl = $this->userModel->baseUrl;
+		
+		$recordList = $this->recordModel->recordList;
+		$recordsHtml = "";
+		
+		if(isset($recordList)) {
+			
+			$recordsHtml .= "<table class='text-record-table'>";
+			
+			foreach ( $recordList as $record ) {
+				$recordsHtml .= "<tr>";
+				$recordsHtml .= "<td nowrap>" . date_format(new DateTime($record['timestamp']), 'Y-m-d H:i') . "</td>";
+				$recordsHtml .= "<td>" . $record['text'] . "</td>";
+				$recordsHtml .= "</tr>";
+			}
+			
+			$recordsHtml .= "</table>";
+			
+		} else{
+			$recordsHtml = "No records found.";
+		}
 		
 		$loginBox = "";
 		$authenticationErrorMessage = "";
-		$rightBox = "";
-		
-		// if the user is logged in
-		if ($this->model->loginStatusString != null) {
-			$loginBox = "<a href='index.php?action=logout'>" . $this->model->loginStatusString . "</a>";
-			
-			// list of options available to logged in user
-			$rightBox = "list of options for logged in user: to update";
-		} else {
-		}
-		
-		$recordList = "";
+		$loginBox = "<a href='index.php?action=logout'>" . $this->userModel->loginStatusString . "</a>";
 		
 		include_once 'templates/header.php';
 		include_once 'templates/pages/home/record_list.php';

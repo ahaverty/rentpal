@@ -1,7 +1,7 @@
 <?php
 
 class Controller {
-	protected $model;
+	protected $userModel;
 	protected $parameters;
 	protected $action;
 
@@ -12,14 +12,14 @@ class Controller {
 	 * @param string $action        	
 	 * @param unknown $parameters        	
 	 */
-	public function __construct($model, $action, $parameters) {
-		$this->model = $model;
+	public function __construct(UserModel $userModel, $action, $parameters) {
+		$this->userModel = $userModel;
 		$this->parameters = $parameters;
 		$this->action = $action;
 	}
 
 	protected function redirect($page) {
-		$location = $this->model->baseUrl . "/" . $page;
+		$location = $this->userModel->baseUrl . "/" . $page;
 		
 		/*
 		 * Use @header to redirect the page:
@@ -32,15 +32,15 @@ class Controller {
 	 * Update the header messages
 	 */
 	function updateHeader() {
-		if ($this->model->isUserLoggedIn ())
-			$this->model->updateLoginStatus ();
+		if ($this->userModel->isUserLoggedIn ())
+			$this->userModel->updateLoginStatus ();
 	}
 
 	/**
 	 * Logout the user
 	 */
 	function logoutUser() {
-		$this->model->logoutUser ();
+		$this->userModel->logoutUser ();
 	}
 
 }

@@ -15,9 +15,9 @@ class IndexController extends Controller {
 	 * @param string $action        	
 	 * @param unknown $parameters        	
 	 */
-	public function __construct($model, $action = null, $parameters) {
+	public function __construct($userModel, $action = null, $parameters) {
 		
-		parent::__construct($model, $action, $parameters);
+		parent::__construct($userModel, $action, $parameters);
 		
 		switch ($this->action) {
 			case "insertNewUser" :
@@ -33,7 +33,7 @@ class IndexController extends Controller {
 				break;
 		}
 		
-		$this->model->prepareIntroMessage ();
+		$this->userModel->prepareIntroMessage ();
 		$this->updateHeader ();
 	}
 
@@ -50,24 +50,24 @@ class IndexController extends Controller {
 		$password = $parameters ["fPassword"];
 		
 		if (! empty ( $username ) && ! empty ( $password ) && ! empty ( $email )) {
-			if ($this->model->validationFactory->isLengthStringValid ( $username, NEW_USER_FORM_MAX_USERNAME_LENGTH ) && $this->model->validationFactory->isLengthStringValid ( $password, NEW_USER_FORM_MAX_PASSWORD_LENGTH ) && $this->model->validationFactory->isEmailValid ( $email )) {
+			if ($this->userModel->validationFactory->isLengthStringValid ( $username, NEW_USER_FORM_MAX_USERNAME_LENGTH ) && $this->userModel->validationFactory->isLengthStringValid ( $password, NEW_USER_FORM_MAX_PASSWORD_LENGTH ) && $this->userModel->validationFactory->isEmailValid ( $email )) {
 				
-				if (! $this->model->authenticationFactory->isUserExisting ( $username )) {
-					$hashedPassword = $this->model->authenticationFactory->getHashValue ( $password );
-					if ($this->model->insertNewUser ( $username, $hashedPassword, $email )) {
-						$this->model->hasRegistrationFailed = false;
-						$this->model->setConfirmationMessage ();
+				if (! $this->userModel->authenticationFactory->isUserExisting ( $username )) {
+					$hashedPassword = $this->userModel->authenticationFactory->getHashValue ( $password );
+					if ($this->userModel->insertNewUser ( $username, $hashedPassword, $email )) {
+						$this->userModel->hasRegistrationFailed = false;
+						$this->userModel->setConfirmationMessage ();
 						return (true);
 					}
 				} else
-					$this->model->setUpNewUserError ( NEW_USER_FORM_EXISTING_ERROR_STR );
+					$this->userModel->setUpNewUserError ( NEW_USER_FORM_EXISTING_ERROR_STR );
 			} else
-				$this->model->setUpNewUserError ( NEW_USER_FORM_ERRORS_STR );
+				$this->userModel->setUpNewUserError ( NEW_USER_FORM_ERRORS_STR );
 		} else
-			$this->model->setUpNewUserError ( NEW_USER_FORM_ERRORS_COMPULSORY_STR );
+			$this->userModel->setUpNewUserError ( NEW_USER_FORM_ERRORS_COMPULSORY_STR );
 		
-		$this->model->hasRegistrationFailed = true;
-		$this->model->updateLoginErrorMessage ();
+		$this->userModel->hasRegistrationFailed = true;
+		$this->userModel->updateLoginErrorMessage ();
 		return (false);
 	}
 
@@ -84,22 +84,22 @@ class IndexController extends Controller {
 		$password = $parameters ["fPassword"];
 		
 		if (! (empty ( $username ) && empty ( $password ))) {
-			if ($this->model->validationFactory->isLengthStringValid ( $username, NEW_USER_FORM_MAX_USERNAME_LENGTH ) && $this->model->validationFactory->isLengthStringValid ( $password, NEW_USER_FORM_MAX_PASSWORD_LENGTH )) {
+			if ($this->userModel->validationFactory->isLengthStringValid ( $username, NEW_USER_FORM_MAX_USERNAME_LENGTH ) && $this->userModel->validationFactory->isLengthStringValid ( $password, NEW_USER_FORM_MAX_PASSWORD_LENGTH )) {
 				
-				$databaseHashedPassword = $this->model->getUserPasswordDigest ( $username );
-				$userHashedPassword = $this->model->authenticationFactory->getHashValue ( $password );
+				$databaseHashedPassword = $this->userModel->getUserPasswordDigest ( $username );
+				$userHashedPassword = $this->userModel->authenticationFactory->getHashValue ( $password );
 				if ($databaseHashedPassword == $userHashedPassword) {
-					$userId = $this->model->getUserId ( $username );
-					$this->model->loginUser ( $userId, $username );
-					$this->model->updateLoginStatus ();
-					$this->model->hasAuthenticationFailed = false;
+					$userId = $this->userModel->getUserId ( $username );
+					$this->userModel->loginUser ( $userId, $username );
+					$this->userModel->updateLoginStatus ();
+					$this->userModel->hasAuthenticationFailed = false;
 					
 					$this->redirect("home.php");
 				}
 			}
 		}
-		$this->model->updateLoginErrorMessage ();
-		$this->model->hasAuthenticationFailed = true;
+		$this->userModel->updateLoginErrorMessage ();
+		$this->userModel->hasAuthenticationFailed = true;
 		return;
 	}
 

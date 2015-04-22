@@ -15,18 +15,21 @@ if (! empty ( $_REQUEST ['action'] )) {
 }
 
 // include the MVC php files
-include "models/Model.php";
+include "models/UserModel.php";
+include "models/RecordModel.php";
 include "controllers/HomeController.php";
 include "views/HomeView.php";
 
 // instanciate a new model
-$model = new Model ();
+$userModel = new UserModel ();
+
+$recordModel = new RecordModel();
 
 // instanciate a new controller by passing in the new model, action and the request
-$controller = new HomeController ( $model, $action, $_REQUEST );
+$controller = new HomeController ( $userModel, $recordModel, $action, $_REQUEST );
 
 // instanciate a new view by providing the controller and the model
-$view = new HomeView ( $controller, $model );
+$view = new HomeView ( $controller, $userModel, $recordModel );
 
 // call the view output function to output to the browser
 $view->output ();

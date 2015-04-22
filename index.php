@@ -15,18 +15,18 @@ if (! empty ( $_REQUEST ['action'] )) {
 }
 
 // include the MVC php files
-include "models/Model.php";
+include "models/UserModel.php";
 include "controllers/IndexController.php";
 include "views/IndexView.php";
 
 // instanciate a new model
-$model = new Model ();
+$userModel = new UserModel ();
 
 // instanciate a new controller by passing in the new model, action and the request
-$controller = new IndexController ( $model, $action, $_REQUEST );
+$controller = new IndexController ( $userModel, $action, $_REQUEST );
 
 // instanciate a new view by providing the controller and the model
-$view = new IndexView ( $controller, $model );
+$view = new IndexView ( $controller, $userModel );
 
 // call the view output function to output to the browser
 $view->output ();

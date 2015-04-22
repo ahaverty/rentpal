@@ -3,7 +3,7 @@
 require_once 'View.php';
 
 /**
- * Controls how the model data appears using template files
+ * Controls how the userModel data appears using template files
  *
  * @author Alan
  */
@@ -11,23 +11,23 @@ class IndexView extends View {
 
 
 	/**
-	 * Outputs the model data
+	 * Outputs the userModel data
 	 */
 	public function output() {
 		
-		// set variables up from the model (for the template)
-		$appName = $this->model->appName;
-		$introMessage = $this->model->introMessage;
-		$newUserErrorMessage = $this->model->newUserErrorMessage;
-		$baseUrl = $this->model->baseUrl;
+		// set variables up from the userModel (for the template)
+		$appName = $this->userModel->appName;
+		$introMessage = $this->userModel->introMessage;
+		$newUserErrorMessage = $this->userModel->newUserErrorMessage;
+		$baseUrl = $this->userModel->baseUrl;
 		
 		$loginBox = "";
 		$authenticationErrorMessage = "";
 		$rightBox = "";
 		
 		// if the user is logged in
-		if ($this->model->loginStatusString != null) {
-			$loginBox = "<a href='index.php?action=logout'>" . $this->model->loginStatusString . "</a>";
+		if ($this->userModel->loginStatusString != null) {
+			$loginBox = "<a href='index.php?action=logout'>" . $this->userModel->loginStatusString . "</a>";
 			
 			// list of options available to logged in user
 			//TODO make dynamic home link !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -38,29 +38,29 @@ class IndexView extends View {
 			$authenticationErrorMessage = "";
 			
 			// if the authentication failed
-			if ($this->model->hasAuthenticationFailed) {
-				// set the authentication message from the model
-				$authenticationErrorMessage = $this->model->authenticationErrorMessage;
+			if ($this->userModel->hasAuthenticationFailed) {
+				// set the authentication message from the userModel
+				$authenticationErrorMessage = $this->userModel->authenticationErrorMessage;
 			}
 			
 			// reads the login form template into the string
 			$loginBox = file_get_contents ( "templates/login_form.php", FILE_USE_INCLUDE_PATH );
-			$rightBox = $this->model->rightBox;
+			$rightBox = $this->userModel->rightBox;
 			
 			// reads the input form template file into the string
 			$registrationForm = file_get_contents ( './templates/insert_new_user_form.php' );
 			
 			$confirmationMessage = "";
 			
-			if (! isset ( $this->model->hasRegistrationFailed )) {
-				// if the model registration boolean is not set
+			if (! isset ( $this->userModel->hasRegistrationFailed )) {
+				// if the userModel registration boolean is not set
 				$rightBox = $registrationForm;
-			} else if ($this->model->hasRegistrationFailed) {
+			} else if ($this->userModel->hasRegistrationFailed) {
 				// if the registration failed was set to true, then make the right box display error message and the registration field
 				$rightBox = $newUserErrorMessage . $registrationForm;
-			} else if ($this->model->hasRegistrationFailed == false) {
+			} else if ($this->userModel->hasRegistrationFailed == false) {
 				// if the registration didnt fail then show a confirmation message in the right box
-				$confirmationMessage = $this->model->signUpConfirmation;
+				$confirmationMessage = $this->userModel->signUpConfirmation;
 				$rightBox = $confirmationMessage;
 			}
 		}

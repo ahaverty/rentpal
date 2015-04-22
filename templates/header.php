@@ -1,19 +1,16 @@
 <?php include_once 'html_doctype_and_head.php'; ?>
 <body>
-
-	<div class="container-fluid">
-		<div class='navbar navbar-fixed-top navbar-inverse'>
-			<div class='navbar-inner'>
-				<div class='container-fluid'>
-					<a href="<?php echo $baseUrl ?>" class='brand'><?php echo $appName;?> </a>
-					<div class="navbar-form pull-right">
-						<div class="navbar-form pull-left" style="padding:10px;"> 
-							<?php echo "<font color='red'>" . $authenticationErrorMessage . "</font>"; ?>
-						</div>
-						<div class="navbar-form pull-right"> <?php echo $loginBox; ?> </div>
-					</div>
-				</div>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class= "navbar-brand" href="<?php echo $baseUrl ?>"><?php echo $appName;?></a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li>
+						<a href="home.php">Home</a>
+					</li>
+				</ul>
 			</div>
 		</div>
-		
-		<div class="row-fluid" style="margin-top: 20px">
+	</nav>

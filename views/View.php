@@ -6,7 +6,7 @@
  * @author Alan
  */
 class View {
-	protected $model;
+	protected $userModel;
 	protected $controller;
 	
 	/**
@@ -15,11 +15,11 @@ class View {
 	 * @param
 	 *        	$controller
 	 * @param
-	 *        	$model
+	 *        	$userModel
 	 */
-	public function __construct($controller, $model) {
+	public function __construct($controller, $userModel) {
 		$this->controller = $controller;
-		$this->model = $model;
+		$this->userModel = $userModel;
 	}
 
 }

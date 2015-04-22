@@ -30,13 +30,8 @@ class TextRecordDao extends BaseDao {
 			return (false);
 	}
 
-	/**
-	 * Gets the corresponding user id from the database
-	 *
-	 * @param string $username        	
-	 * @return record
-	 */
-	public function getRecord($appUserId, $recordId) {
+
+	public function getRecordForUser($appUserId, $recordId) {
 		
 		$record = NULL;
 		
@@ -47,6 +42,23 @@ class TextRecordDao extends BaseDao {
 		
 		$result = $this->dbManager->executeSelectQuery ( $sqlQuery );
 		
+		if ($result != NULL) {
+			$record = $result;
+		}
+		return ($record);
+	}
+	
+
+	public function getAllRecordsForUser($appUserId) {
+	
+		$record = NULL;
+	
+		$sqlQuery = "SELECT * ";
+		$sqlQuery .= "FROM $this->table_TextRecord ";
+		$sqlQuery .= "WHERE $this->col_appUserId='$appUserId' ";
+	
+		$result = $this->dbManager->executeSelectQuery ( $sqlQuery );
+	
 		if ($result != NULL) {
 			$record = $result;
 		}

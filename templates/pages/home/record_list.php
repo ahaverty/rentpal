@@ -1,3 +1,3 @@
-<div class="span6">
-	<?php echo $recordList; ?>
+<div class="span10">
+	<?php echo $recordsHtml; ?>
 </div>
