@@ -8,7 +8,7 @@
 class View {
 	protected $model;
 	protected $controller;
-
+	
 	/**
 	 * Construct for assigning the controller and model passed into the View class
 	 *

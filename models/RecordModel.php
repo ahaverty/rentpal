@@ -3,6 +3,9 @@
 /*
  * Include the files needed for the model class
  */
+
+include_once 'Model.php';
+
 include_once './conf/config.inc.php';
 include_once './db/DaoFactory.php';
 include_once 'ValidationFactory.php';
@@ -11,7 +14,7 @@ include_once 'AuthenticationFactory.php';
 /**
  * Model class that defines the data used in the View and Controller classes
  */
-class Model {
+class RecordModel extends Model {
 	
 	// factories
 	public $daoFactory;

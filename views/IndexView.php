@@ -19,6 +19,7 @@ class IndexView extends View {
 		$appName = $this->model->appName;
 		$introMessage = $this->model->introMessage;
 		$newUserErrorMessage = $this->model->newUserErrorMessage;
+		$baseUrl = $this->model->baseUrl;
 		
 		$loginBox = "";
 		$authenticationErrorMessage = "";
@@ -28,8 +29,9 @@ class IndexView extends View {
 		if ($this->model->loginStatusString != null) {
 			$loginBox = "<a href='index.php?action=logout'>" . $this->model->loginStatusString . "</a>";
 			
-// 			// list of options available to logged in user
-// 			$rightBox = "list of options for logged in user: to update";
+			// list of options available to logged in user
+			//TODO make dynamic home link !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			$rightBox = "<a href='home.php'>Home</a>";
 		} else {
 			// if the user is not logged in
 			

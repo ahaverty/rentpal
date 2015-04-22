@@ -5,7 +5,7 @@
 		<div class='navbar navbar-fixed-top navbar-inverse'>
 			<div class='navbar-inner'>
 				<div class='container-fluid'>
-					<a class='brand'><?php echo $appName;?> </a>
+					<a href="<?php echo $baseUrl ?>" class='brand'><?php echo $appName;?> </a>
 					<div class="navbar-form pull-right">
 						<div class="navbar-form pull-left" style="padding:10px;"> 
 							<?php echo "<font color='red'>" . $authenticationErrorMessage . "</font>"; ?>

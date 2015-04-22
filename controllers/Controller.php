@@ -19,7 +19,7 @@ class Controller {
 	}
 
 	protected function redirect($page) {
-		$location = "http://" . $this->model->baseUrl . "/" . $page;
+		$location = $this->model->baseUrl . "/" . $page;
 		
 		/*
 		 * Use @header to redirect the page:

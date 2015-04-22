@@ -17,6 +17,7 @@ class HomeView extends View {
 		
 		// set variables up from the model (for the template)
 		$appName = $this->model->appName;
+		$baseUrl = $this->model->baseUrl;
 		$introMessage = $this->model->introMessage;
 		$newUserErrorMessage = $this->model->newUserErrorMessage;
 		
@@ -32,8 +33,6 @@ class HomeView extends View {
 			$rightBox = "list of options for logged in user: to update";
 		} else {
 		}
-		
-		
 		
 		$recordList = "";
 		
