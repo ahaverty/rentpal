@@ -21,13 +21,13 @@ class IndexView extends View {
 		$newUserErrorMessage = $this->userModel->newUserErrorMessage;
 		$baseUrl = $this->userModel->baseUrl;
 		
-		$loginBox = "";
+		$loginRegisterBox = "";
 		$authenticationErrorMessage = "";
 		$rightBox = "";
 		
 		// if the user is logged in
 		if ($this->userModel->loginStatusString != null) {
-			$loginBox = "<a href='index.php?action=logout'>" . $this->userModel->loginStatusString . "</a>";
+			$loginRegisterBox = "<a href='index.php?action=logout'>" . $this->userModel->loginStatusString . "</a>";
 			
 			// list of options available to logged in user
 			//TODO make dynamic home link !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -44,7 +44,7 @@ class IndexView extends View {
 			}
 			
 			// reads the login form template into the string
-			$loginBox = file_get_contents ( "templates/login_form.php", FILE_USE_INCLUDE_PATH );
+			$loginRegisterBox = file_get_contents ( "templates/login_register_form.php", FILE_USE_INCLUDE_PATH );
 			$rightBox = $this->userModel->rightBox;
 			
 			// reads the input form template file into the string
