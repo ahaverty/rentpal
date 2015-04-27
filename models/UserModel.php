@@ -75,10 +75,6 @@ class UserModel {
 		return ($this->appUserDao->getUserId ( $username ));
 	}
 
-	public function prepareIntroMessage() {
-		$this->introMessage = INDEX_INTRO_MESSAGE_STR;
-	}
-
 	public function setUpNewUserError($errorString) {
 		$this->newUserErrorMessage = "<div class='alert alert-error'>" . $errorString . "</div>";
 	}

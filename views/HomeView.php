@@ -46,6 +46,7 @@ class HomeView extends View {
 		$loginBox = "";
 		$authenticationErrorMessage = "";
 		$loginBox = "<a href='index.php?action=logout'>" . $this->userModel->loginStatusString . "</a>";
+		$userStatus = "<li><a href='home.php'>Logged in as " . $_SESSION['username'] . "</a></li>";
 		
 		include_once 'templates/header.php';
 		include_once 'templates/pages/home/record_list.php';

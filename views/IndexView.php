@@ -24,6 +24,8 @@ class IndexView extends View {
 		$loginRegisterBox = "";
 		$authenticationErrorMessage = "";
 		$rightBox = "";
+		$loginRegisterStatus = "";
+		$userStatus = "";
 		
 		// if the user is logged in
 		if ($this->userModel->loginStatusString != null) {
@@ -32,6 +34,9 @@ class IndexView extends View {
 			// list of options available to logged in user
 			//TODO make dynamic home link !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			$rightBox = "<a href='home.php'>Home</a>";
+			
+			$userStatus = "<li><a href='home.php'>Logged in as " . $_SESSION['username'] . "</a></li>";
+			
 		} else {
 			// if the user is not logged in
 			
@@ -41,7 +46,12 @@ class IndexView extends View {
 			if ($this->userModel->hasAuthenticationFailed) {
 				// set the authentication message from the userModel
 				$authenticationErrorMessage = $this->userModel->authenticationErrorMessage;
+				
+				$loginRegisterStatus = "<div class='alert alert-danger' role='alert'>
+						<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>
+						</span><span class='sr-only'>Error:</span> " . $authenticationErrorMessage . "</div>";
 			}
+			
 			
 			// reads the login form template into the string
 			$loginRegisterBox = file_get_contents ( "templates/login_register_form.php", FILE_USE_INCLUDE_PATH );
@@ -67,6 +77,7 @@ class IndexView extends View {
 		
 		// include the index template that displays the variables set through the MVC in html form
 		include_once 'templates/header.php';
+		include_once 'templates/pages/front_jumbotron.php';
 		include_once 'templates/pages/front.php';
 		include_once 'templates/footer.php';
 	}

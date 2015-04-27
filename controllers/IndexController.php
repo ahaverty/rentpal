@@ -33,7 +33,6 @@ class IndexController extends Controller {
 				break;
 		}
 		
-		$this->userModel->prepareIntroMessage ();
 		$this->updateHeader ();
 	}
 

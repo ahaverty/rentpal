@@ -23,10 +23,6 @@ define ( "NEW_USER_FORM_SYSTEM_ERROR_STR", "Something went wrong during registra
 define ( "LOGIN_USER_FORM_MAX_USERNAME_LENGTH", 30 );
 define ( "LOGIN_USER_FORM_MAX_PASSWORD_LENGTH", 20 );
 define ( "LOGIN_USER_FORM_WELCOME_STR", "Welcome" );
-define ( "LOGIN_USER_FORM_AUTHENTICATION_ERROR", "Error: Incorrect Username and Password combination" );
+define ( "LOGIN_USER_FORM_AUTHENTICATION_ERROR", "Incorrect Username and Password combination" );
 define ( "LOGIN_USER_FORM_LOGOUT_STR", "Logout" );
-
-/* misc */
-define ( "INDEX_INTRO_MESSAGE_STR", "Record lease and rent details in the cloud with " . APP_NAME );
-define ( "LOGGED_IN_USER_MENU", "<ul><li>option 1</li><li>option 2 </li></li>" );
 ?>
