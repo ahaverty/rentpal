@@ -24,20 +24,27 @@ class HomeView extends View {
 		$baseUrl = $this->userModel->baseUrl;
 		
 		$recordList = $this->recordModel->recordList;
-		$recordsHtml = "";
+		//$recordsHtml = "";
+		$articlesHtml = "";
 		
 		if(isset($recordList)) {
 			
-			$recordsHtml .= "<table class='text-record-table'>";
+			//$recordsHtml .= "<table class='text-record-table'>";
+			
+			$article_template = file_get_contents ( './templates/pages/home/article_template.php' );
 			
 			foreach ( $recordList as $record ) {
-				$recordsHtml .= "<tr>";
-				$recordsHtml .= "<td nowrap>" . date_format(new DateTime($record['timestamp']), 'Y-m-d H:i') . "</td>";
-				$recordsHtml .= "<td>" . $record['text'] . "</td>";
-				$recordsHtml .= "</tr>";
+// 				$recordsHtml .= "<tr>";
+// 				$recordsHtml .= "<td nowrap>" . date_format(new DateTime($record['timestamp']), 'Y-m-d H:i') . "</td>";
+// 				$recordsHtml .= "<td>" . $record['text'] . "</td>";
+// 				$recordsHtml .= "</tr>";
+				
+				$articleWithHeader = str_replace("<HEADER_HOLDER>", date_format(new DateTime($record['timestamp']), 'Y-m-d H:i'), $article_template);
+				$articleWithBody = str_replace("<BODY_HOLDER>", $record['text'], $articleWithHeader);
+				$articlesHtml .= $articleWithBody;
 			}
 			
-			$recordsHtml .= "</table>";
+			//$recordsHtml .= "</table>";
 			
 		} else{
 			$recordsHtml = "No records found.";
