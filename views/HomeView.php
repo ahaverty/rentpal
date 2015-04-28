@@ -56,6 +56,7 @@ class HomeView extends View {
 		$userStatus = "<li><a href='home.php'>Logged in as " . $_SESSION['username'] . "</a></li>";
 		
 		include_once 'templates/header.php';
+		include_once 'templates/pages/home/insert_new_record.php';
 		include_once 'templates/pages/home/record_list.php';
 		include_once 'templates/footer.php';
 	}

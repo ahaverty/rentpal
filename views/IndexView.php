@@ -29,7 +29,6 @@ class IndexView extends View {
 		
 		// if the user is logged in
 		if ($this->userModel->loginStatusString != null) {
-			$loginRegisterBox = "<a href='index.php?action=logout'>" . $this->userModel->loginStatusString . "</a>";
 			
 			// list of options available to logged in user
 			//TODO make dynamic home link !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
