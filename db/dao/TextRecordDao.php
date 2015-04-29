@@ -56,6 +56,7 @@ class TextRecordDao extends BaseDao {
 		$sqlQuery = "SELECT * ";
 		$sqlQuery .= "FROM $this->table_TextRecord ";
 		$sqlQuery .= "WHERE $this->col_appUserId='$appUserId' ";
+		$sqlQuery .= "ORDER BY $this->col_timestamp DESC";
 	
 		$result = $this->dbManager->executeSelectQuery ( $sqlQuery );
 	
@@ -73,8 +74,8 @@ class TextRecordDao extends BaseDao {
 	 * @return unknown
 	 */
 	public function insertNewRecord($appUserId, $text) {
-		$sqlQuery = "INSERT INTO $this->table_AppUser ($this->col_appUserId, $this->col_text) ";
-		$sqlQuery .= "VALUES ('$appUserId', '$text') ";
+		$sqlQuery = "INSERT INTO $this->table_TextRecord ($this->col_appUserId, $this->col_text) ";
+		$sqlQuery .= "VALUES ($appUserId, '$text') ";
 		$result = $this->dbManager->executeQuery ( $sqlQuery );
 		return $result;
 	}

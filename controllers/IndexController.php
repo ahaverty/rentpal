@@ -1,23 +1,17 @@
 <?php
-
 require_once 'Controller.php';
 
-/**
- * 
- *
- */
 class IndexController extends Controller {
 
 	/**
 	 * Controller construct
-	 * 
+	 *
 	 * @param unknown $model        	
 	 * @param string $action        	
 	 * @param unknown $parameters        	
 	 */
 	public function __construct($userModel, $action = null, $parameters) {
-		
-		parent::__construct($userModel, $action, $parameters);
+		parent::__construct ( $userModel, $action, $parameters );
 		
 		switch ($this->action) {
 			case "insertNewUser" :
@@ -93,7 +87,7 @@ class IndexController extends Controller {
 					$this->userModel->updateLoginStatus ();
 					$this->userModel->hasAuthenticationFailed = false;
 					
-					$this->redirect("home.php");
+					$this->redirect ( "home.php" );
 				}
 			}
 		}

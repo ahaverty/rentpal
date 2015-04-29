@@ -11,7 +11,7 @@
 	</div>
 	<div class="col-md-4">
 		<h2>Author</h2>
-		<p>Alan Haverty, C12410858, DT211/3 Website Development Assignment. Dublin Institute of Technology, Dated April 2015.</p>
+		<p>Alan Haverty, C12410858, DT211/3 Website Development Assignment. <a href="mailto:alan.haverty@student.dit.ie">alan.haverty@student.dit.ie</a>, Dublin Institute of Technology, Dated April 2015.</p>
 		<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
 	</div>
 </div>

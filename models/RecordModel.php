@@ -8,7 +8,8 @@ include_once './db/DaoFactory.php';
  */
 class RecordModel {
 	
-	public $recordList = "Test";
+	public $recordList = "";
+	private $textRecordDao;
 
 	/**
 	 * Construct for Model class for setting up variables and factories.
@@ -21,6 +22,10 @@ class RecordModel {
 
 	public function setRecordList($appUserId) {
 		$this->recordList = $this->textRecordDao->getAllRecordsForUser($appUserId);
+	}
+	
+	public function insertTextRecord($appUserId, $recordText) {
+		return $this->textRecordDao->insertNewRecord($appUserId, $recordText);
 	}
 
 	public function __destruct() {
