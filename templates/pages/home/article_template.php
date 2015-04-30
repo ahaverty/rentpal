@@ -3,9 +3,9 @@
 		<i class="glyphicon glyphicon-comment"></i>
 	</div>
 	<div class="panel-heading">
-		<h2 class="panel-title"><HEADER_HOLDER></h2>
+		<h2 class="panel-title">{{ header }}</h2>
 	</div>
 	<div class="panel-body">
-		<BODY_HOLDER>
+		{{ body }}
 	</div>
 </article>

@@ -1,11 +1,6 @@
 <?php
 require_once 'View.php';
 
-/**
- * Controls how the model data appears using template files
- *
- * @author Alan
- */
 class HomeView extends View {
 	private $recordModel;
 
@@ -14,9 +9,6 @@ class HomeView extends View {
 		$this->recordModel = $recordModel;
 	}
 
-	/**
-	 * Outputs the model data
-	 */
 	public function output() {
 		
 		// set variables up from the model (for the template)
@@ -24,36 +16,44 @@ class HomeView extends View {
 		$baseUrl = $this->userModel->baseUrl;
 		
 		$recordList = $this->recordModel->recordList;
-		//$recordsHtml = "";
 		$articlesHtml = "";
 		
-		if(isset($recordList)) {
-			
-			//$recordsHtml .= "<table class='text-record-table'>";
-			
-			$article_template = file_get_contents ( './templates/pages/home/article_template.php' );
+		$article_template = file_get_contents ( './templates/pages/home/article_template.php' );
+		$start = array (
+				"{{ header }}",
+				"{{ body }}" 
+		);
+		
+		if (isset ( $recordList )) {
 			
 			foreach ( $recordList as $record ) {
-// 				$recordsHtml .= "<tr>";
-// 				$recordsHtml .= "<td nowrap>" . date_format(new DateTime($record['timestamp']), 'Y-m-d H:i') . "</td>";
-// 				$recordsHtml .= "<td>" . $record['text'] . "</td>";
-// 				$recordsHtml .= "</tr>";
 				
-				$articleWithHeader = str_replace("<HEADER_HOLDER>", date_format(new DateTime($record['timestamp']), 'Y-m-d H:i'), $article_template);
-				$articleWithBody = str_replace("<BODY_HOLDER>", $record['text'], $articleWithHeader);
-				$articlesHtml .= $articleWithBody;
+				$recordTime = new DateTime ( $record ['timestamp'] );
+				$recordText = $record ['text'];
+				
+				$replace = array (
+						date_format ( $recordTime, 'Y-m-d H:i' ),
+						$recordText 
+				);
+				
+				$articlesHtml .= str_replace ( $start, $replace, $article_template );
 			}
+		} else {
 			
-			//$recordsHtml .= "</table>";
+			//TODO should this be done in the controller? @alanhave
 			
-		} else{
-			$recordsHtml = "No records found.";
+			$replace = array (
+					date ( 'Y-m-d H:i' ),
+					"Emailed the landlord today about the water leak above the apartment. This is an example record that will dissapear after creating a new record." 
+			);
+			
+			$articlesHtml .= str_replace ( $start, $replace, $article_template );
 		}
 		
 		$loginBox = "";
 		$authenticationErrorMessage = "";
 		$loginBox = "<a href='index.php?action=logout'>" . $this->userModel->loginStatusString . "</a>";
-		$userStatus = "<li><a href='home.php'>Logged in as " . $_SESSION['username'] . "</a></li>";
+		$userStatus = "<li><a href='home.php'>Logged in as " . $_SESSION ['username'] . "</a></li>";
 		
 		include_once 'templates/header.php';
 		include_once 'templates/pages/home/insert_new_record.php';

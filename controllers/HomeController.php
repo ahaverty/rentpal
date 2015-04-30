@@ -48,7 +48,7 @@ class HomeController extends Controller {
 		if (! empty ( $recordText )) {
 			
 			if ($this->recordModel->insertTextRecord($_SESSION['user_id'], $recordText)) {
-				return (true);
+				$this->redirect("home.php");
 			} else {
 			}
 		} else {
