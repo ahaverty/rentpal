@@ -63,7 +63,12 @@ class AuthenticationFactory {
 	 * @return boolean
 	 */
 	public function isUserLoggedIn() {
-		return (! empty ( $_SESSION ['user_id'] ));
+		if(! empty ( $_SESSION ['username'] )){
+			if($this->isUserExisting($_SESSION ['username'])){
+				return (true);
+			}
+		}
+		return (false);
 	}
 
 	/**
