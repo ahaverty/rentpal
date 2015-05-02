@@ -20,6 +20,7 @@ class HomeView extends View {
 		
 		$article_template = file_get_contents ( './templates/pages/home/article_template.php' );
 		$start = array (
+				"{{ recordId }}",
 				"{{ header }}",
 				"{{ body }}" 
 		);
@@ -28,10 +29,12 @@ class HomeView extends View {
 			
 			foreach ( $recordList as $record ) {
 				
+				$recordId = $record ['record_id'];
 				$recordTime = new DateTime ( $record ['timestamp'] );
 				$recordText = $record ['text'];
 				
 				$replace = array (
+						$recordId,
 						date_format ( $recordTime, 'Y-m-d H:i' ),
 						$recordText 
 				);
@@ -43,6 +46,7 @@ class HomeView extends View {
 			//TODO should this be done in the controller? @alanhave
 			
 			$replace = array (
+					0,
 					date ( 'Y-m-d H:i' ),
 					"Emailed the landlord today about the water leak above the apartment. This is an example record that will dissapear after creating a new record." 
 			);

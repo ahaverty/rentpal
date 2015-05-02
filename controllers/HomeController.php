@@ -27,6 +27,9 @@ class HomeController extends Controller {
 			case "insertNewRecord" :
 				$this->insertNewRecord( $this->parameters );
 				break;
+			case "deleteRecord" :
+				$this->deleteRecord( $this->parameters );
+				break;
 			case "logout" :
 				$this->logoutUser ();
 				break;
@@ -49,13 +52,22 @@ class HomeController extends Controller {
 			
 			if ($this->recordModel->insertTextRecord($_SESSION['user_id'], $recordText)) {
 				$this->redirect("home.php");
-			} else {
-			}
-		} else {
-			
+			} 
 		}
+		
 		return (false);
 	}
+	
+	
+	function deleteRecord($parameters) {
+		$recordId = $parameters ['record_id'];
+		
+		if($this->recordModel->deleteTextRecord($recordId)){
+			$this->redirect("home.php");
+		}
+		
+	}
+	
 
 }
 ?>

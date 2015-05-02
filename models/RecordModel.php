@@ -27,6 +27,10 @@ class RecordModel {
 	public function insertTextRecord($appUserId, $recordText) {
 		return $this->textRecordDao->insertNewRecord($appUserId, $recordText);
 	}
+	
+	public function deleteTextRecord($recordId) {
+		return $this->textRecordDao->deleteRecord($recordId);
+	}
 
 	public function __destruct() {
 		$this->daoFactory->clearDbResources ();

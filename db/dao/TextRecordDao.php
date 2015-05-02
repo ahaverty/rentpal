@@ -79,6 +79,13 @@ class TextRecordDao extends BaseDao {
 		$result = $this->dbManager->executeQuery ( $sqlQuery );
 		return $result;
 	}
+	
+	public function deleteRecord($recordId) {
+		$sqlQuery = "DELETE FROM $this->table_TextRecord ";
+		$sqlQuery .= "WHERE " . $this->col_recordId . " = " . $recordId;
+		$result = $this->dbManager->executeQuery ( $sqlQuery );
+		return $result;
+	}
 
 }
 ?>

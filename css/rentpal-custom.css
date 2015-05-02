@@ -72,6 +72,11 @@
     float: left;
 }
 
+.timeline .panel .panel-heading .panel-actions * { display:inline-block; }
+.timeline .panel .panel-heading .panel-actions {
+	float:right;
+}
+
 .timeline .panel-outline {
     border-color: transparent;
     background: transparent;
