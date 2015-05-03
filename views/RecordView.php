@@ -1,10 +1,10 @@
 <?php
 require_once 'View.php';
 
-class HomeView extends View {
+class RecordView extends View {
 	private $recordModel;
 
-	public function __construct(HomeController $controller, CoreModel $coreModel, RecordModel $recordModel) {
+	public function __construct(RecordController $controller, CoreModel $coreModel, RecordModel $recordModel) {
 		parent::__construct ( $controller, $coreModel );
 		$this->recordModel = $recordModel;
 	}
@@ -13,7 +13,7 @@ class HomeView extends View {
 		$recordList = $this->recordModel->recordList;
 		$articlesHtml = "";
 		
-		$article_template = file_get_contents ( './templates/pages/home/article_template.php' );
+		$article_template = file_get_contents ( './templates/pages/records/article_template.php' );
 		$start = array (
 				"{{ recordId }}",
 				"{{ header }}",
@@ -50,8 +50,8 @@ class HomeView extends View {
 		}
 		
 		include_once 'templates/pages/header.php';
-		include_once 'templates/pages/home/insert_new_record.php';
-		include_once 'templates/pages/home/record_list.php';
+		include_once 'templates/pages/records/insert_new_record.php';
+		include_once 'templates/pages/records/record_list.php';
 		include_once 'templates/pages/footer.php';
 	}
 

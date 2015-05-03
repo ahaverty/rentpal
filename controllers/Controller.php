@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Base Controller class containing some common functionality.
+ * All Controller classes should extend this class.
+ * 
+ * @author Alan
+ *        
+ */
 class Controller {
 	protected $coreModel;
 	protected $parameters;
@@ -16,8 +23,23 @@ class Controller {
 		$this->coreModel = $coreModel;
 		$this->parameters = $parameters;
 		$this->action = $action;
+		
+		switch ($this->action) {
+			case "logout" :
+				$this->logoutUser ();
+				break;
+			default :
+				break;
+		}
+		
+		$this->updateHeader();
+		
 	}
 
+	/**
+	 *
+	 * @param unknown $page        	
+	 */
 	protected function redirect($page) {
 		$location = $this->coreModel->baseUrl . "/" . $page;
 		header ( "Location: " . $location );
@@ -28,8 +50,9 @@ class Controller {
 	 * Update the header depending on if the user is logged in
 	 */
 	function updateHeader() {
-		if ($this->coreModel->isUserLoggedIn())
-			$this->coreModel->updateUserOptions($_SESSION['username']);
+		if ($this->coreModel->isUserLoggedIn ()) {
+			$this->coreModel->updateUserOptions ( $_SESSION ['username'] );
+		}
 	}
 
 	/**

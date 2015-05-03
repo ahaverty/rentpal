@@ -31,7 +31,7 @@ class View {
 	
 	public function setupHeaderLinks() {
 		if($this->coreModel->isUserLoggedIn()){
-			$this->navigationLinks = "<li><a href='home.php'>Home</a></li>";
+			$this->navigationLinks = "<li><a href='records.php'>Records</a></li>";
 		}
 	}
 

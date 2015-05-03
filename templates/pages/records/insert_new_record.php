@@ -1,7 +1,7 @@
 <h1>Add &amp; View Records</h1>
 <p>Add new records to track your rental</p>					
 
-<form role="new-record-form" action="home.php" method="post" role="form">
+<form role="new-record-form" action="records.php" method="post" role="form">
 	<input id='action' type='hidden' name='action' value='insertNewRecord' />	
 	<div class="form-group">
 		<label for="comment">Comment:</label>

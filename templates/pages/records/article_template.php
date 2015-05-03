@@ -32,7 +32,7 @@
 		<div id="record-text" style="display: block;">{{ body }}</div>
 
 		<!-- Edit record form -->
-		<form id="edit-record-form" action="home.php" method="post"
+		<form id="edit-record-form" action="records.php" method="post"
 			role="form" style="display: none;">
 			<input id='action' type='hidden' name='action' value='editRecord' />
 			<input type='hidden' name='record_id' value='{{ recordId }}'>

@@ -4,11 +4,11 @@ require_once 'Controller.php';
 class IndexController extends Controller {
 
 	/**
-	 * Controller construct
+	 * Index Controller construct calls parent construct and delegates action
 	 *
-	 * @param unknown $model        	
-	 * @param string $action        	
-	 * @param unknown $parameters        	
+	 * @param unknown $model
+	 * @param string $action
+	 * @param unknown $parameters
 	 */
 	public function __construct($coreModel, $action = null, $parameters) {
 		parent::__construct ( $coreModel, $action, $parameters );
@@ -20,14 +20,9 @@ class IndexController extends Controller {
 			case "loginUser" :
 				$this->loginUser ( $this->parameters );
 				break;
-			case "logout" :
-				$this->logoutUser ();
-				break;
 			default :
 				break;
 		}
-		
-		$this->updateHeader ();
 	}
 
 	/**
@@ -86,7 +81,7 @@ class IndexController extends Controller {
 					$this->coreModel->loginUser( $userId, $username );
 					$this->coreModel->hasAuthenticationFailed = false;
 					
-					$this->redirect ( "home.php" );
+					$this->redirect ( "records.php" );
 				}
 			}
 		}

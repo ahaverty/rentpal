@@ -1,11 +1,11 @@
 <?php
 require_once 'Controller.php';
 
-class HomeController extends Controller {
+class RecordController extends Controller {
 	private $recordModel;
 
 	/**
-	 * Controller construct
+	 * RecordsController Construct calls parent construct and controls which action to use.
 	 *
 	 * @param unknown $model        	
 	 * @param string $action        	
@@ -32,14 +32,9 @@ class HomeController extends Controller {
 			case "deleteRecord" :
 				$this->deleteRecord ( $this->parameters );
 				break;
-			case "logout" :
-				$this->logoutUser ();
-				break;
 			default :
 				break;
 		}
-		
-		$this->updateHeader ();
 	}
 
 	/**
@@ -53,8 +48,8 @@ class HomeController extends Controller {
 		
 		if (! empty ( $recordText )) {
 			
-			if ($this->recordModel->insertTextRecord ( $_SESSION ['user_id'], mysql_real_escape_string($recordText) )) {
-				$this->redirect ( "home.php" );
+			if ($this->recordModel->insertTextRecord ( $_SESSION ['user_id'], mysql_escape_string ( $recordText ) )) {
+				$this->redirect ( "records.php" );
 			}
 		}
 		
@@ -67,8 +62,8 @@ class HomeController extends Controller {
 		
 		if (! empty ( $recordText )) {
 			
-			if ($this->recordModel->editTextRecord ( $recordId, mysql_real_escape_string($recordText) )) {
-				$this->redirect ( "home.php" );
+			if ($this->recordModel->editTextRecord ( $recordId, mysql_escape_string ( $recordText ) )) {
+				$this->redirect ( "records.php" );
 			}
 		}
 		
@@ -79,7 +74,7 @@ class HomeController extends Controller {
 		$recordId = $parameters ['record_id'];
 		
 		if ($this->recordModel->deleteTextRecord ( $recordId )) {
-			$this->redirect ( "home.php" );
+			$this->redirect ( "records.php" );
 		}
 	}
 
