@@ -2,7 +2,6 @@
 require_once 'Controller.php';
 
 class HomeController extends Controller {
-	
 	private $recordModel;
 
 	/**
@@ -25,10 +24,13 @@ class HomeController extends Controller {
 		
 		switch ($this->action) {
 			case "insertNewRecord" :
-				$this->insertNewRecord( $this->parameters );
+				$this->insertNewRecord ( $this->parameters );
+				break;
+			case "editRecord" :
+				$this->editRecord ( $this->parameters );
 				break;
 			case "deleteRecord" :
-				$this->deleteRecord( $this->parameters );
+				$this->deleteRecord ( $this->parameters );
 				break;
 			case "logout" :
 				$this->logoutUser ();
@@ -42,7 +44,8 @@ class HomeController extends Controller {
 
 	/**
 	 * Inserts a new text record for the user
-	 * @param unknown $parameters
+	 *
+	 * @param unknown $parameters        	
 	 * @return boolean
 	 */
 	function insertNewRecord($parameters) {
@@ -50,24 +53,35 @@ class HomeController extends Controller {
 		
 		if (! empty ( $recordText )) {
 			
-			if ($this->recordModel->insertTextRecord($_SESSION['user_id'], $recordText)) {
-				$this->redirect("home.php");
-			} 
+			if ($this->recordModel->insertTextRecord ( $_SESSION ['user_id'], $recordText )) {
+				$this->redirect ( "home.php" );
+			}
 		}
 		
 		return (false);
 	}
-	
-	
+
+	function editRecord($parameters) {
+		$recordId = $parameters ['record_id'];
+		$recordText = $parameters ['record_text'];
+		
+		if (! empty ( $recordText )) {
+			
+			if ($this->recordModel->editTextRecord ( $recordId, $recordText )) {
+				$this->redirect ( "home.php" );
+			}
+		}
+		
+		return (false);
+	}
+
 	function deleteRecord($parameters) {
 		$recordId = $parameters ['record_id'];
 		
-		if($this->recordModel->deleteTextRecord($recordId)){
-			$this->redirect("home.php");
+		if ($this->recordModel->deleteTextRecord ( $recordId )) {
+			$this->redirect ( "home.php" );
 		}
-		
 	}
-	
 
 }
 ?>

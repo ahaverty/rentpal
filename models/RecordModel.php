@@ -28,6 +28,10 @@ class RecordModel {
 		return $this->textRecordDao->insertNewRecord($appUserId, $recordText);
 	}
 	
+	public function editTextRecord($recordId, $recordText) {
+		return $this->textRecordDao->editRecord($recordId, $recordText);
+	}
+	
 	public function deleteTextRecord($recordId) {
 		return $this->textRecordDao->deleteRecord($recordId);
 	}

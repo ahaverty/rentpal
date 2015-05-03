@@ -15,5 +15,6 @@
 	<script src="js/jquery-2.1.3.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/login-register.js"></script>
+	<script src="js/rentpal-custom.js"></script>
 	
 </head>
