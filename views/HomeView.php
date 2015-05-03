@@ -11,10 +11,6 @@ class HomeView extends View {
 
 	public function output() {
 		
-		// set variables up from the model (for the template)
-		$appName = $this->userModel->appName;
-		$baseUrl = $this->userModel->baseUrl;
-		
 		$recordList = $this->recordModel->recordList;
 		$articlesHtml = "";
 		
@@ -22,7 +18,7 @@ class HomeView extends View {
 		$start = array (
 				"{{ recordId }}",
 				"{{ header }}",
-				"{{ body }}" 
+				"{{ body }}"
 		);
 		
 		if (isset ( $recordList )) {
@@ -54,10 +50,7 @@ class HomeView extends View {
 			$articlesHtml .= str_replace ( $start, $replace, $article_template );
 		}
 		
-		$loginBox = "";
-		$authenticationErrorMessage = "";
-		$loginBox = "<a href='index.php?action=logout'>" . $this->userModel->loginStatusString . "</a>";
-		$userStatus = "<li><a href='home.php'>Logged in as " . $_SESSION ['username'] . "</a></li>";
+		
 		
 		include_once 'templates/header.php';
 		include_once 'templates/pages/home/insert_new_record.php';

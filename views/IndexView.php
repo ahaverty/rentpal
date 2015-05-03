@@ -15,12 +15,6 @@ class IndexView extends View {
 	 */
 	public function output() {
 		
-		// set variables up from the userModel (for the template)
-		$appName = $this->userModel->appName;
-		$introMessage = $this->userModel->introMessage;
-		$newUserErrorMessage = $this->userModel->newUserErrorMessage;
-		$baseUrl = $this->userModel->baseUrl;
-		
 		$loginRegisterBox = "";
 		$authenticationErrorMessage = "";
 		$rightBox = "";
@@ -28,13 +22,7 @@ class IndexView extends View {
 		$userStatus = "";
 		
 		// if the user is logged in
-		if ($this->userModel->loginStatusString != null) {
-			
-			// list of options available to logged in user
-			//TODO make dynamic home link !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			$rightBox = "<a href='home.php'>Home</a>";
-			
-			$userStatus = "<li><a href='home.php'>Logged in as " . $_SESSION['username'] . "</a></li>";
+		if ($this->userModel->isUserLoggedIn()) {
 			
 		} else {
 			// if the user is not logged in

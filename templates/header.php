@@ -11,7 +11,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="<?php echo $baseUrl ?>"><?php echo $appName;?></a>
+				<a class="navbar-brand" href="<?php echo $this->baseUrl ?>"><?php echo $this->appName;?></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -19,15 +19,13 @@
 				<ul class="nav navbar-nav">
 					<li><a href="home.php">Home</a></li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<?php echo $userStatus; ?>
-					<li class="dropdown"><a href="#" class="dropdown-toggle"
-						data-toggle="dropdown">Profile <span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="index.php?action=logout">Logout</a></li>
-						</ul></li>
+				<ul class='nav navbar-nav navbar-right'>
+					<li class='dropdown'>
+						<?php echo $this->userOptions; ?>
+					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<div class="container">
+		<?php echo $this->alertMessage;?>

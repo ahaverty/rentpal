@@ -53,7 +53,7 @@ class HomeController extends Controller {
 		
 		if (! empty ( $recordText )) {
 			
-			if ($this->recordModel->insertTextRecord ( $_SESSION ['user_id'], $recordText )) {
+			if ($this->recordModel->insertTextRecord ( $_SESSION ['user_id'], mysql_real_escape_string($recordText) )) {
 				$this->redirect ( "home.php" );
 			}
 		}
@@ -67,7 +67,7 @@ class HomeController extends Controller {
 		
 		if (! empty ( $recordText )) {
 			
-			if ($this->recordModel->editTextRecord ( $recordId, $recordText )) {
+			if ($this->recordModel->editTextRecord ( $recordId, mysql_real_escape_string($recordText) )) {
 				$this->redirect ( "home.php" );
 			}
 		}

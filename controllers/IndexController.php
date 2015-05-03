@@ -83,8 +83,7 @@ class IndexController extends Controller {
 				$userHashedPassword = $this->userModel->authenticationFactory->getHashValue ( $password );
 				if ($databaseHashedPassword == $userHashedPassword) {
 					$userId = $this->userModel->getUserId ( $username );
-					$this->userModel->loginUser ( $userId, $username );
-					$this->userModel->updateLoginStatus ();
+					$this->userModel->loginUser( $userId, $username );
 					$this->userModel->hasAuthenticationFailed = false;
 					
 					$this->redirect ( "home.php" );

@@ -20,20 +20,16 @@ class Controller {
 
 	protected function redirect($page) {
 		$location = $this->userModel->baseUrl . "/" . $page;
-		
-		/*
-		 * Use @header to redirect the page:
-		 */
 		header ( "Location: " . $location );
 		exit ();
 	}
 
 	/**
-	 * Update the header messages
+	 * Update the header depending on if the user is logged in
 	 */
 	function updateHeader() {
-		if ($this->userModel->isUserLoggedIn ())
-			$this->userModel->updateLoginStatus ();
+		if ($this->userModel->isUserLoggedIn())
+			$this->userModel->updateUserOptions($_SESSION['username']);
 	}
 
 	/**

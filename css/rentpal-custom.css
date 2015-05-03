@@ -1,3 +1,22 @@
+
+.jumbotron {
+	background-image: url("../media/images/pages/front/jumbotron_bg.jpg");
+	background-size: cover;
+	background-position:bottom;
+	color: #fff;
+	line-height: 1.25;
+	margin: 0;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+p#jumbo-description {
+	font-weight:300;
+}
+
+#login-register-container{
+	margin-top:35px;
+}
+
 .timeline {
     position: relative;
     padding: 21px 0px 10px;

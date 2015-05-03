@@ -29,6 +29,7 @@ class UserModel {
 	public $rightBox = "";
 	public $signUpConfirmation = "";
 	public $baseUrl = "";
+	public $userOptions = "<li class='dropdown'><a href='index.php'>Login or Register</a></li>";
 	
 	// error messages
 	public $newUserErrorMessage = "";
@@ -54,7 +55,7 @@ class UserModel {
 
 	/**
 	 * Logs a user in
-	 * 
+	 *
 	 * @param int $userID        	
 	 * @param string $username        	
 	 */
@@ -71,7 +72,7 @@ class UserModel {
 		return ($this->appUserDao->getUserPasswordDigest ( $username ));
 	}
 
-	public function getUserID($username) {
+	public function getUserId($username) {
 		return ($this->appUserDao->getUserId ( $username ));
 	}
 
@@ -79,9 +80,15 @@ class UserModel {
 		$this->newUserErrorMessage = "<div class='alert alert-error'>" . $errorString . "</div>";
 	}
 
-	public function updateLoginStatus() {
-		$this->loginStatusString = LOGIN_USER_FORM_WELCOME_STR . " " . $this->authenticationFactory->getUsernameLoggedIn () . " | " . LOGIN_USER_FORM_LOGOUT_STR;
-		$this->authenticationErrorMessage = "";
+	public function updateUserOptions($username) {
+		$this->userOptions =	"<a href='#' class='dropdown-toggle' data-toggle='dropdown'>" . $username . "<span class='caret'></span></a>
+								<ul class='dropdown-menu' role='menu'>
+									<li>
+										<a href='index.php?action=logout'>
+											Logout
+										</a>
+									</li>
+								</ul>";
 	}
 
 	public function updateLoginErrorMessage() {
@@ -94,7 +101,7 @@ class UserModel {
 	}
 
 	public function insertNewUser($username, $hashedPassword, $email) {
-		return ($this->appUserDao->insertNewUser ( $username, $hashedPassword , $email ));
+		return ($this->appUserDao->insertNewUser ( $username, $hashedPassword, $email ));
 	}
 
 	public function logoutUser() {
