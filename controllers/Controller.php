@@ -1,7 +1,7 @@
 <?php
 
 class Controller {
-	protected $userModel;
+	protected $coreModel;
 	protected $parameters;
 	protected $action;
 
@@ -12,14 +12,14 @@ class Controller {
 	 * @param string $action        	
 	 * @param unknown $parameters        	
 	 */
-	public function __construct(UserModel $userModel, $action, $parameters) {
-		$this->userModel = $userModel;
+	public function __construct(CoreModel $coreModel, $action, $parameters) {
+		$this->coreModel = $coreModel;
 		$this->parameters = $parameters;
 		$this->action = $action;
 	}
 
 	protected function redirect($page) {
-		$location = $this->userModel->baseUrl . "/" . $page;
+		$location = $this->coreModel->baseUrl . "/" . $page;
 		header ( "Location: " . $location );
 		exit ();
 	}
@@ -28,15 +28,15 @@ class Controller {
 	 * Update the header depending on if the user is logged in
 	 */
 	function updateHeader() {
-		if ($this->userModel->isUserLoggedIn())
-			$this->userModel->updateUserOptions($_SESSION['username']);
+		if ($this->coreModel->isUserLoggedIn())
+			$this->coreModel->updateUserOptions($_SESSION['username']);
 	}
 
 	/**
 	 * Logout the user
 	 */
 	function logoutUser() {
-		$this->userModel->logoutUser ();
+		$this->coreModel->logoutUser ();
 	}
 
 }

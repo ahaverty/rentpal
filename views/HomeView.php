@@ -4,13 +4,12 @@ require_once 'View.php';
 class HomeView extends View {
 	private $recordModel;
 
-	public function __construct($controller, $userModel, $recordModel) {
-		parent::__construct ( $controller, $userModel );
+	public function __construct(HomeController $controller, CoreModel $coreModel, RecordModel $recordModel) {
+		parent::__construct ( $controller, $coreModel );
 		$this->recordModel = $recordModel;
 	}
 
 	public function output() {
-		
 		$recordList = $this->recordModel->recordList;
 		$articlesHtml = "";
 		
@@ -18,7 +17,7 @@ class HomeView extends View {
 		$start = array (
 				"{{ recordId }}",
 				"{{ header }}",
-				"{{ body }}"
+				"{{ body }}" 
 		);
 		
 		if (isset ( $recordList )) {
@@ -39,7 +38,7 @@ class HomeView extends View {
 			}
 		} else {
 			
-			//TODO should this be done in the controller? @alanhave
+			// TODO should this be done in the controller? @alanhave
 			
 			$replace = array (
 					0,
@@ -50,12 +49,10 @@ class HomeView extends View {
 			$articlesHtml .= str_replace ( $start, $replace, $article_template );
 		}
 		
-		
-		
-		include_once 'templates/header.php';
+		include_once 'templates/pages/header.php';
 		include_once 'templates/pages/home/insert_new_record.php';
 		include_once 'templates/pages/home/record_list.php';
-		include_once 'templates/footer.php';
+		include_once 'templates/pages/footer.php';
 	}
 
 }

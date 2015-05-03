@@ -17,7 +17,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="navbar-brand">
 				<ul class="nav navbar-nav">
-					<li><a href="home.php">Home</a></li>
+					<?php echo $this->navigationLinks; ?>
 				</ul>
 				<ul class='nav navbar-nav navbar-right'>
 					<li class='dropdown'>

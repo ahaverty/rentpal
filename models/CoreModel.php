@@ -11,7 +11,7 @@ include_once 'AuthenticationFactory.php';
 /**
  * Model class that defines the data used in the View and Controller classes
  */
-class UserModel {
+class CoreModel {
 	
 	// factories
 	public $daoFactory;

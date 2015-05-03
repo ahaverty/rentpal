@@ -5,25 +5,34 @@
  * @author Alan
  */
 class View {
-	protected $userModel;
+	protected $coreModel;
 	protected $controller;
 	public $appName;
 	public $baseUrl;
 	public $userStatus;
 	public $alertMessage = "";
+	public $navigationLinks = "";
 
 	/**
 	 * Construct for assigning the controller and model passed into the View class
 	 *
 	 * @param	$controller
-	 * @param  	$userModel
+	 * @param  	$coreModel
 	 */
-	public function __construct(Controller $controller, UserModel $userModel) {
+	public function __construct(Controller $controller, CoreModel $coreModel) {
 		$this->controller = $controller;
-		$this->userModel = $userModel;
-		$this->appName = $this->userModel->appName;
-		$this->baseUrl = $this->userModel->baseUrl;
-		$this->userOptions = $this->userModel->userOptions;
+		$this->coreModel = $coreModel;
+		$this->appName = $this->coreModel->appName;
+		$this->baseUrl = $this->coreModel->baseUrl;
+		$this->userOptions = $this->coreModel->userOptions;
+		
+		$this->setupHeaderLinks();
+	}
+	
+	public function setupHeaderLinks() {
+		if($this->coreModel->isUserLoggedIn()){
+			$this->navigationLinks = "<li><a href='home.php'>Home</a></li>";
+		}
 	}
 
 }

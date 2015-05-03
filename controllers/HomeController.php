@@ -11,7 +11,7 @@ class HomeController extends Controller {
 	 * @param string $action        	
 	 * @param unknown $parameters        	
 	 */
-	public function __construct(UserModel $userModel, RecordModel $recordModel, $action = null, $parameters) {
+	public function __construct(CoreModel $userModel, RecordModel $recordModel, $action = null, $parameters) {
 		parent::__construct ( $userModel, $action, $parameters );
 		
 		if ($userModel->isUserLoggedIn () == false) {

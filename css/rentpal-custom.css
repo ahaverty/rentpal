@@ -1,3 +1,8 @@
+.navbar{
+	border-radius:0;
+	margin-bottom:0;
+}
+
 
 .jumbotron {
 	background-image: url("../media/images/pages/front/jumbotron_bg.jpg");

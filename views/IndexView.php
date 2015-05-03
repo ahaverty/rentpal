@@ -3,7 +3,7 @@
 require_once 'View.php';
 
 /**
- * Controls how the userModel data appears using template files
+ * Controls how the coreModel data appears using template files
  *
  * @author Alan
  */
@@ -11,18 +11,16 @@ class IndexView extends View {
 
 
 	/**
-	 * Outputs the userModel data
+	 * Outputs the coreModel data
 	 */
 	public function output() {
 		
 		$loginRegisterBox = "";
 		$authenticationErrorMessage = "";
-		$rightBox = "";
 		$loginRegisterStatus = "";
-		$userStatus = "";
 		
 		// if the user is logged in
-		if ($this->userModel->isUserLoggedIn()) {
+		if ($this->coreModel->isUserLoggedIn()) {
 			
 		} else {
 			// if the user is not logged in
@@ -30,43 +28,25 @@ class IndexView extends View {
 			$authenticationErrorMessage = "";
 			
 			// if the authentication failed
-			if ($this->userModel->hasAuthenticationFailed) {
-				// set the authentication message from the userModel
-				$authenticationErrorMessage = $this->userModel->authenticationErrorMessage;
+			if ($this->coreModel->hasAuthenticationFailed) {
+				// set the authentication message from the coreModel
+				$authenticationErrorMessage = $this->coreModel->authenticationErrorMessage;
 				
 				$loginRegisterStatus = "<div class='alert alert-danger' role='alert'>
 						<span class='glyphicon glyphicon-exclamation-sign' aria-hidden='true'>
 						</span><span class='sr-only'>Error:</span> " . $authenticationErrorMessage . "</div>";
 			}
 			
-			
 			// reads the login form template into the string
-			$loginRegisterBox = file_get_contents ( "templates/login_register_form.php", FILE_USE_INCLUDE_PATH );
-			$rightBox = $this->userModel->rightBox;
-			
-			// reads the input form template file into the string
-			$registrationForm = file_get_contents ( './templates/insert_new_user_form.php' );
-			
-			$confirmationMessage = "";
-			
-			if (! isset ( $this->userModel->hasRegistrationFailed )) {
-				// if the userModel registration boolean is not set
-				$rightBox = $registrationForm;
-			} else if ($this->userModel->hasRegistrationFailed) {
-				// if the registration failed was set to true, then make the right box display error message and the registration field
-				$rightBox = $newUserErrorMessage . $registrationForm;
-			} else if ($this->userModel->hasRegistrationFailed == false) {
-				// if the registration didnt fail then show a confirmation message in the right box
-				$confirmationMessage = $this->userModel->signUpConfirmation;
-				$rightBox = $confirmationMessage;
-			}
+			$loginRegisterBox = file_get_contents ( "templates/pages/front/login_register_form.php", FILE_USE_INCLUDE_PATH );
+
 		}
 		
 		// include the index template that displays the variables set through the MVC in html form
-		include_once 'templates/header.php';
-		include_once 'templates/pages/front_jumbotron.php';
-		include_once 'templates/pages/front.php';
-		include_once 'templates/footer.php';
+		include_once 'templates/pages/header.php';
+		include_once 'templates/pages/front/front_jumbotron.php';
+		include_once 'templates/pages/front/front.php';
+		include_once 'templates/pages/footer.php';
 	}
 
 }
