@@ -17,6 +17,7 @@ class IndexView extends View {
 		
 		if ($this->coreModel->isUserLoggedIn () == false) {
 
+			//get the login/registration alerts which were set in the controller
 			$loginRegisterAlert = $this->coreModel->getLoginRegisterAlert();
 			
 			// reads the login form template into the string
