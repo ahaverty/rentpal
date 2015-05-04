@@ -14,7 +14,7 @@ class Controller {
 
 	/**
 	 * Controller construct for common actions and updating the header navigation with user details.
-	 * 
+	 *
 	 * @param CoreModel $coreModel        	
 	 * @param unknown $action        	
 	 * @param unknown $parameters        	
@@ -23,6 +23,8 @@ class Controller {
 		$this->coreModel = $coreModel;
 		$this->parameters = $parameters;
 		$this->action = $action;
+		
+		$this->getMessageAlertFromSession ();
 		
 		switch ($this->action) {
 			case "logout" :
@@ -36,7 +38,8 @@ class Controller {
 	}
 
 	/**
-	 *
+	 * Redirects to the provided page
+	 * 
 	 * @param unknown $page        	
 	 */
 	protected function redirect($page) {
@@ -59,7 +62,40 @@ class Controller {
 	 */
 	function logoutUser() {
 		$this->coreModel->logoutUser ();
-		$this->coreModel->setPageAlert("success", LOGOUT_SUCCESS);
+		$this->coreModel->setPageAlert ( "success", LOGOUT_SUCCESS );
+	}
+	
+	/**
+	 * Set the message alert through the $_SESSION variable due to the way some pages save and redirects to refresh content.
+	 *
+	 * @param string $category
+	 * @param unknown $message
+	 */
+	protected function setSessionMessageAlert($category = "default", $message) {
+		$_SESSION ['alert_message_category'] = $category;
+		$_SESSION ['alert_message'] = $message;
+	}
+	
+	/**
+	 * Extracts an alert message and category from the $_SESSION variable and sets the model page alert with it.
+	 * Necessary due to how the some pages handle redirects to refresh content.
+	 */
+	protected function getMessageAlertFromSession() {
+		if (isset ( $_SESSION ['alert_message'] )) {
+				
+			$recordCategory = "default";
+				
+			if (isset ( $_SESSION ['alert_message_category'] )) {
+				$recordCategory = $_SESSION ['alert_message_category'];
+			}
+				
+			// set the coremodel with the message
+			$this->coreModel->setPageAlert ( $recordCategory, $_SESSION ['alert_message'] );
+				
+			// unset the session variable record messages after using
+			unset ( $_SESSION ['alert_message_category'] );
+			unset ( $_SESSION ['alert_message'] );
+		}
 	}
 
 }

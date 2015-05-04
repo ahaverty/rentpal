@@ -46,6 +46,17 @@ class IndexController extends Controller {
 					
 					if ($this->coreModel->insertNewUser ( $username, $hashedPassword, $email )) {
 						$this->coreModel->setloginRegisterAlert ( "success", NEW_USER_FORM_REGISTRATION_CONFIRMATION_STR );
+						
+						// Setup sample records for when a new user first joins
+						include "models/RecordModel.php";
+						$recordModel = new RecordModel ();
+						
+						$userId = $this->coreModel->getUserId ( $username );
+						
+						$recordModel->insertTextRecord ( $userId, DEFAULT_RECORD_1 );
+						$recordModel->insertTextRecord ( $userId, DEFAULT_RECORD_2 );
+						$recordModel->insertTextRecord ( $userId, DEFAULT_RECORD_3 );
+						
 						return (true);
 					}
 				} else {
@@ -86,6 +97,7 @@ class IndexController extends Controller {
 					$userId = $this->coreModel->getUserId ( $username );
 					$this->coreModel->loginUser ( $userId, $username );
 					
+					$this->setSessionMessageAlert ( "success", LOGIN_SUCCESS );
 					$this->redirect ( "records.php" );
 				}
 			}

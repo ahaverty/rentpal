@@ -21,6 +21,7 @@ class RecordView extends View {
 		);
 		
 		if (isset ( $recordList )) {
+			// If the user has records in the database
 			
 			foreach ( $recordList as $record ) {
 				
@@ -37,16 +38,17 @@ class RecordView extends View {
 				$articlesHtml .= str_replace ( $start, $replace, $article_template );
 			}
 		} else {
+			// If no records exist
 			
-			// TODO should this be done in the controller? @alanhave
+			$no_article_placeholder = file_get_contents ( './templates/pages/records/no_article_placeholder.php' );
 			
 			$replace = array (
 					0,
-					date ( 'Y-m-d H:i' ),
-					"Emailed the landlord today about the water leak above the apartment. This is an example record that will dissapear after creating a new record." 
+					"You have no records!",
+					"If you did have records, we'd show them here! Start by adding a new record above." 
 			);
 			
-			$articlesHtml .= str_replace ( $start, $replace, $article_template );
+			$articlesHtml .= str_replace ( $start, $replace, $no_article_placeholder );
 		}
 		
 		include_once 'templates/pages/header.php';

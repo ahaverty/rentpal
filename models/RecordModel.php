@@ -25,11 +25,11 @@ class RecordModel {
 	}
 	
 	public function insertTextRecord($appUserId, $recordText) {
-		return $this->textRecordDao->insertNewRecord($appUserId, $recordText);
+		return $this->textRecordDao->insertNewRecord($appUserId, mysql_escape_string($recordText));
 	}
 	
 	public function editTextRecord($recordId, $recordText) {
-		return $this->textRecordDao->editRecord($recordId, $recordText);
+		return $this->textRecordDao->editRecord($recordId, mysql_escape_string($recordText));
 	}
 	
 	public function deleteTextRecord($recordId) {

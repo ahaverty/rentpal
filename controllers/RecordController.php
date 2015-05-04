@@ -15,25 +15,13 @@ class RecordController extends Controller {
 		parent::__construct ( $userModel, $action, $parameters );
 		
 		if ($userModel->isUserLoggedIn () == false) {
+			$this->setSessionMessageAlert ( "warning", NOT_LOGGED_IN );
 			$this->redirect ( "index.php" );
 		}
 		
 		$this->recordModel = $recordModel;
 		
 		$this->recordModel->setRecordList ( $_SESSION ['user_id'] );
-		
-		// Retrieve page alert message from the session variable due to how record page redirects after saving
-		if (isset ( $_SESSION ['record_message'] )) {
-			$recordCategory = "default";
-			if (isset ( $_SESSION ['record_message_category'] )) {
-				$recordCategory = $_SESSION ['record_message_category'];
-			}
-			$this->coreModel->setPageAlert ( $recordCategory, $_SESSION ['record_message'] );
-			
-			// unset the session variable record messages after using
-			unset ( $_SESSION ['record_message_category'] );
-			unset ( $_SESSION ['record_message'] );
-		}
 		
 		switch ($this->action) {
 			case "insertNewRecord" :
@@ -61,7 +49,7 @@ class RecordController extends Controller {
 		
 		if (! empty ( $recordText )) {
 			
-			if ($this->recordModel->insertTextRecord ( $_SESSION ['user_id'], mysql_escape_string ( $recordText ) )) {
+			if ($this->recordModel->insertTextRecord ( $_SESSION ['user_id'], $recordText )) {
 				$this->setSessionMessageAlert ( "success", RECORD_INSERT_SUCCESS );
 				$this->redirect ( "records.php" );
 			} else {
@@ -74,45 +62,48 @@ class RecordController extends Controller {
 		return (false);
 	}
 
+	/**
+	 * Edit an existing record with the provided text and record_id
+	 * 
+	 * @param unknown $parameters        	
+	 * @return boolean
+	 */
 	function editRecord($parameters) {
 		$recordId = $parameters ['record_id'];
 		$recordText = $parameters ['record_text'];
 		
 		if (! empty ( $recordText )) {
 			
-			if ($this->recordModel->editTextRecord ( $recordId, mysql_escape_string ( $recordText ) )) {
+			if ($this->recordModel->editTextRecord ( $recordId, $recordText )) {
 				$this->setSessionMessageAlert ( "success", RECORD_EDIT_SUCCESS );
 				$this->redirect ( "records.php" );
 			} else {
-				$this->coreModel->setPageAlert("danger", RECORD_EDIT_ERROR);
+				$this->coreModel->setPageAlert ( "danger", RECORD_EDIT_ERROR );
 			}
 		} else {
-			$this->coreModel->setPageAlert("danger", RECORD_INSERT_EMPTY);
+			$this->coreModel->setPageAlert ( "danger", RECORD_INSERT_EMPTY );
 		}
 		
 		return (false);
 	}
 
+	/**
+	 * Delete a record with the provided record_id
+	 *
+	 * @param unknown $parameters        	
+	 */
 	function deleteRecord($parameters) {
+		
+		// TODO Documented that the hidden inputs containing the record_id could potentially be messed with,
+		// resulting in any record to be deleted
 		$recordId = $parameters ['record_id'];
 		
 		if ($this->recordModel->deleteTextRecord ( $recordId )) {
 			$this->setSessionMessageAlert ( "success", RECORD_DELETE_SUCCESS );
 			$this->redirect ( "records.php" );
 		} else {
-			$this->coreModel->setPageAlert("danger", RECORD_DELETE_ERROR);
+			$this->coreModel->setPageAlert ( "danger", RECORD_DELETE_ERROR );
 		}
-	}
-
-	/**
-	 * Set the message alert through the $_SESSION variable due to the way records page saves and redirects to refresh content.
-	 * 
-	 * @param string $category        	
-	 * @param unknown $message        	
-	 */
-	private function setSessionMessageAlert($category = "default", $message) {
-		$_SESSION ['record_message_category'] = $category;
-		$_SESSION ['record_message'] = $message;
 	}
 
 }
