@@ -11,7 +11,7 @@
 				cabinet, for everything related to your new lease, online.</p>
 		</div>
 		<div id="login-register-container" class="col-md-4">
-			<?php echo $loginRegisterStatus; ?>
+			<?php echo $loginRegisterAlert; ?>
 			<?php echo $loginRegisterBox; ?>
 		</div>
 	</div>

@@ -6,9 +6,9 @@ class IndexController extends Controller {
 	/**
 	 * Index Controller construct calls parent construct and delegates action
 	 *
-	 * @param unknown $model
-	 * @param string $action
-	 * @param unknown $parameters
+	 * @param unknown $model        	
+	 * @param string $action        	
+	 * @param unknown $parameters        	
 	 */
 	public function __construct($coreModel, $action = null, $parameters) {
 		parent::__construct ( $coreModel, $action, $parameters );
@@ -41,21 +41,25 @@ class IndexController extends Controller {
 			if ($this->coreModel->validationFactory->isLengthStringValid ( $username, NEW_USER_FORM_MAX_USERNAME_LENGTH ) && $this->coreModel->validationFactory->isLengthStringValid ( $password, NEW_USER_FORM_MAX_PASSWORD_LENGTH ) && $this->coreModel->validationFactory->isEmailValid ( $email )) {
 				
 				if (! $this->coreModel->authenticationFactory->isUserExisting ( $username )) {
+					
 					$hashedPassword = $this->coreModel->authenticationFactory->getHashValue ( $password );
+					
 					if ($this->coreModel->insertNewUser ( $username, $hashedPassword, $email )) {
-						$this->coreModel->hasRegistrationFailed = false;
-						$this->coreModel->setConfirmationMessage ();
+						$this->coreModel->setloginRegisterAlert ( "success", NEW_USER_FORM_REGISTRATION_CONFIRMATION_STR );
 						return (true);
 					}
-				} else
-					$this->coreModel->setUpNewUserError ( NEW_USER_FORM_EXISTING_ERROR_STR );
-			} else
-				$this->coreModel->setUpNewUserError ( NEW_USER_FORM_ERRORS_STR );
-		} else
-			$this->coreModel->setUpNewUserError ( NEW_USER_FORM_ERRORS_COMPULSORY_STR );
-		
-		$this->coreModel->hasRegistrationFailed = true;
-		$this->coreModel->updateLoginErrorMessage ();
+				} else {
+					
+					$this->coreModel->setloginRegisterAlert ( "danger", NEW_USER_FORM_EXISTING_ERROR_STR );
+				}
+			} else {
+				
+				$this->coreModel->setloginRegisterAlert ( "danger", NEW_USER_FORM_ERRORS_STR );
+			}
+		} else {
+			
+			$this->coreModel->setloginRegisterAlert ( "danger", NEW_USER_FORM_ERRORS_COMPULSORY_STR );
+		}
 		return (false);
 	}
 
@@ -76,17 +80,17 @@ class IndexController extends Controller {
 				
 				$databaseHashedPassword = $this->coreModel->getUserPasswordDigest ( $username );
 				$userHashedPassword = $this->coreModel->authenticationFactory->getHashValue ( $password );
+				
 				if ($databaseHashedPassword == $userHashedPassword) {
+					
 					$userId = $this->coreModel->getUserId ( $username );
-					$this->coreModel->loginUser( $userId, $username );
-					$this->coreModel->hasAuthenticationFailed = false;
+					$this->coreModel->loginUser ( $userId, $username );
 					
 					$this->redirect ( "records.php" );
 				}
 			}
 		}
-		$this->coreModel->updateLoginErrorMessage ();
-		$this->coreModel->hasAuthenticationFailed = true;
+		$this->coreModel->setloginRegisterAlert ( "danger", LOGIN_USER_FORM_AUTHENTICATION_ERROR );
 		return;
 	}
 

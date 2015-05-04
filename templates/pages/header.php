@@ -28,4 +28,4 @@
 		</div>
 	</nav>
 	<div class="container">
-		<?php echo $this->alertMessage;?>
+		<?php echo $this->pageAlert;?>

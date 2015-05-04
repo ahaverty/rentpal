@@ -11,18 +11,19 @@ define ( "APP_NAME", "RentPal" );
 define ( "BASE_URL",  $_SERVER['SERVER_NAME'] . dirname($_SERVER['PHP_SELF']) );
 
 /* new user form constants */
-define ( "NEW_USER_FORM_ERRORS_STR", "Errors exist in the form" );
-define ( "NEW_USER_FORM_ERRORS_COMPULSORY_STR", "All the fields are compulsory" );
-define ( "NEW_USER_FORM_EXISTING_ERROR_STR", "Another user already exists in the system with the same username" );
 define ( "NEW_USER_FORM_MAX_USERNAME_LENGTH", 30 );
 define ( "NEW_USER_FORM_MAX_PASSWORD_LENGTH", 20 );
-define ( "NEW_USER_FORM_REGISTRATION_CONFIRMATION_STR", "You have registered successfully" );
-define ( "NEW_USER_FORM_SYSTEM_ERROR_STR", "Something went wrong during registration" );
 
 /* login user form constants */
 define ( "LOGIN_USER_FORM_MAX_USERNAME_LENGTH", 30 );
 define ( "LOGIN_USER_FORM_MAX_PASSWORD_LENGTH", 20 );
-define ( "LOGIN_USER_FORM_WELCOME_STR", "Welcome" );
-define ( "LOGIN_USER_FORM_AUTHENTICATION_ERROR", "Incorrect Username and Password combination" );
-define ( "LOGIN_USER_FORM_LOGOUT_STR", "Logout" );
+
+
+/* Alert Message strings */
+define ( "NEW_USER_FORM_ERRORS_STR", "<strong>Error: </strong>Errors exist in the form" );
+define ( "NEW_USER_FORM_ERRORS_COMPULSORY_STR", "<strong>Error: </strong>All the fields are compulsory" );
+define ( "NEW_USER_FORM_EXISTING_ERROR_STR", "<strong>Error: </strong>Another user already exists in the system with the same username" );
+define ( "NEW_USER_FORM_REGISTRATION_CONFIRMATION_STR", "<strong>Success: </strong>You have registered successfully" );
+define ( "NEW_USER_FORM_SYSTEM_ERROR_STR", "<strong>Error: </strong>Something went wrong during registration" );
+define ( "LOGIN_USER_FORM_AUTHENTICATION_ERROR", "<strong>Error: </strong>Incorrect Username and Password combination" );
 ?>

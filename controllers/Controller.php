@@ -3,7 +3,7 @@
 /**
  * Base Controller class containing some common functionality.
  * All Controller classes should extend this class.
- * 
+ *
  * @author Alan
  *        
  */
@@ -13,10 +13,10 @@ class Controller {
 	protected $action;
 
 	/**
-	 * Controller construct
-	 *
-	 * @param unknown $model        	
-	 * @param string $action        	
+	 * Controller construct for common actions and updating the header navigation with user details.
+	 * 
+	 * @param CoreModel $coreModel        	
+	 * @param unknown $action        	
 	 * @param unknown $parameters        	
 	 */
 	public function __construct(CoreModel $coreModel, $action, $parameters) {
@@ -32,8 +32,7 @@ class Controller {
 				break;
 		}
 		
-		$this->updateHeader();
-		
+		$this->updateHeader ();
 	}
 
 	/**

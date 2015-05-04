@@ -10,7 +10,7 @@ class View {
 	public $appName;
 	public $baseUrl;
 	public $userStatus;
-	public $alertMessage = "";
+	public $pageAlert = "";
 	public $navigationLinks = "";
 
 	/**
@@ -24,7 +24,9 @@ class View {
 		$this->coreModel = $coreModel;
 		$this->appName = $this->coreModel->appName;
 		$this->baseUrl = $this->coreModel->baseUrl;
+		
 		$this->userOptions = $this->coreModel->userOptions;
+		$this->pageAlert = $this->coreModel->getPageAlert();
 		
 		$this->setupHeaderLinks();
 	}

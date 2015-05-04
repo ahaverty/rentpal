@@ -20,24 +20,19 @@ class CoreModel {
 	
 	// DAOs
 	private $appUserDao;
-	private $textRecordDao;
 	
 	// strings
 	public $appName = "";
-	public $introMessage = "";
-	public $loginStatusString = "";
-	public $rightBox = "";
-	public $signUpConfirmation = "";
 	public $baseUrl = "";
+	
+	// Alert messages
+	public $pageAlert = "";
+	public $loginRegisterAlert = "";
+	
+	// Site components
 	public $userOptions = "<li class='dropdown'><a href='index.php'>Login or Register</a></li>";
 	
-	// error messages
-	public $newUserErrorMessage = "";
-	public $authenticationErrorMessage = "";
 	
-	// control variables
-	public $hasAuthenticationFailed = false;
-	public $hasRegistrationFailed = null;
 
 	/**
 	 * Construct for Model class for setting up variables and factories.
@@ -46,7 +41,6 @@ class CoreModel {
 		$this->daoFactory = new DaoFactory ();
 		$this->daoFactory->initDbResources ();
 		$this->appUserDao = $this->daoFactory->getAppUserDao ();
-		$this->textRecordDao = $this->daoFactory->getTextRecordDao ();
 		$this->authenticationFactory = new AuthenticationFactory ( $this->appUserDao );
 		$this->validationFactory = new ValidationFactory ();
 		$this->appName = APP_NAME;
@@ -76,12 +70,48 @@ class CoreModel {
 		return ($this->appUserDao->getUserId ( $username ));
 	}
 
-	public function setUpNewUserError($errorString) {
-		$this->newUserErrorMessage = "<div class='alert alert-error'>" . $errorString . "</div>";
+	/**
+	 * Creates the alert message html using the provided category (default, danger, info..) and the message.
+	 *
+	 * @param string $category        	
+	 * @param string $message        	
+	 * @return the alert message as html code
+	 */
+	private function createAlertMessage($category = "default", $message = "") {
+		$alertHtmlTemplate = file_get_contents ( "templates/pages/alert_template.php", FILE_USE_INCLUDE_PATH );
+		
+		$start = array (
+				"{{ alertCategory }}",
+				"{{ alertMessage }}" 
+		);
+		
+		$replace = array (
+				$category,
+				$message 
+		);
+		
+		$alertHtml = str_replace ( $start, $replace, $alertHtmlTemplate );
+		return $alertHtml;
+	}
+	
+	public function setPageAlert($category = "default", $message = "") {
+		$this->pageAlert .= $this->createAlertMessage($category, $message);
+	}
+	
+	public function getPageAlert() {
+		return $this->pageAlert;
+	}
+	
+	public function setloginRegisterAlert($category = "default", $message = "") {
+		$this->loginRegisterAlert .= $this->createAlertMessage($category, $message);
+	}
+	
+	public function getLoginRegisterAlert() {
+		return $this->loginRegisterAlert;
 	}
 
 	public function updateUserOptions($username) {
-		$this->userOptions =	"<a href='#' class='dropdown-toggle' data-toggle='dropdown'>" . $username . "<span class='caret'></span></a>
+		$this->userOptions = "<a href='#' class='dropdown-toggle' data-toggle='dropdown'>" . $username . "<span class='caret'></span></a>
 								<ul class='dropdown-menu' role='menu'>
 									<li>
 										<a href='index.php?action=logout'>
@@ -89,15 +119,6 @@ class CoreModel {
 										</a>
 									</li>
 								</ul>";
-	}
-
-	public function updateLoginErrorMessage() {
-		$this->authenticationErrorMessage = LOGIN_USER_FORM_AUTHENTICATION_ERROR;
-		$this->loginStatusString = "";
-	}
-
-	public function setConfirmationMessage() {
-		$this->signUpConfirmation = "<div class='alert alert-success'>" . NEW_USER_FORM_REGISTRATION_CONFIRMATION_STR . "</div>";
 	}
 
 	public function insertNewUser($username, $hashedPassword, $email) {
