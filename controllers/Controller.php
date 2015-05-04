@@ -59,6 +59,7 @@ class Controller {
 	 */
 	function logoutUser() {
 		$this->coreModel->logoutUser ();
+		$this->coreModel->setPageAlert("success", LOGOUT_SUCCESS);
 	}
 
 }

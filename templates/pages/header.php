@@ -27,5 +27,7 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container">
+	<div id="page-alert-container">
 		<?php echo $this->pageAlert;?>
+	</div>
+	<div class="container">

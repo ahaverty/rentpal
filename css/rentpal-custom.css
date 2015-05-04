@@ -3,6 +3,17 @@
 	margin-bottom:0;
 }
 
+#page-alert-container .alert {
+	border-radius:0;
+	margin:0;
+	padding: 2px 9%;
+    text-align: center;
+}
+
+#page-alert-container .alert a{
+	margin-left:10px;	
+}
+
 
 .jumbotron {
 	background-image: url("../media/images/pages/front/jumbotron_bg.jpg");
