@@ -42,7 +42,7 @@ class IndexController extends Controller {
 				
 				if (! $this->coreModel->authenticationFactory->isUserExisting ( $username )) {
 					
-					$hashedPassword = $this->coreModel->authenticationFactory->getHashValue ( $password );
+					$hashedPassword = $this->coreModel->coreAuthenticationFactory->getHashValue ( $password );
 					
 					if ($this->coreModel->insertNewUser ( $username, $hashedPassword, $email )) {
 						
@@ -84,7 +84,7 @@ class IndexController extends Controller {
 			if ($this->coreModel->validationFactory->isLengthStringValid ( $username, NEW_USER_FORM_MAX_USERNAME_LENGTH ) && $this->coreModel->validationFactory->isLengthStringValid ( $password, NEW_USER_FORM_MAX_PASSWORD_LENGTH )) {
 				
 				$databaseHashedPassword = $this->coreModel->getUserPasswordDigest ( $username );
-				$userHashedPassword = $this->coreModel->authenticationFactory->getHashValue ( $password );
+				$userHashedPassword = $this->coreModel->coreAuthenticationFactory->getHashValue ( $password );
 				
 				if ($databaseHashedPassword == $userHashedPassword) {
 					
