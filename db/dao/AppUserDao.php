@@ -2,6 +2,10 @@
 require_once ("BaseDao.php");
 
 class AppUserDao extends BaseDao {
+	
+	/*
+	 * Database constants
+	 */
 	private $table_AppUser = "app_user";
 	private $col_id = "id";
 	private $col_username = "username";

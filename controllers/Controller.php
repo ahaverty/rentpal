@@ -19,10 +19,15 @@ class Controller {
 	 * @param unknown $action        	
 	 * @param unknown $parameters        	
 	 */
-	public function __construct(CoreModel $coreModel, $action, $parameters) {
+	public function __construct(CoreModel $coreModel, $parameters) {
 		$this->coreModel = $coreModel;
 		$this->parameters = $parameters;
-		$this->action = $action;
+		
+		if (! empty ( $_REQUEST ['action'] )) {
+			$this->action = $_REQUEST ['action'];
+		} else {
+			$this->action = "";
+		}
 		
 		$this->getMessageAlertFromSession ();
 		
@@ -39,7 +44,7 @@ class Controller {
 
 	/**
 	 * Redirects to the provided page
-	 * 
+	 *
 	 * @param unknown $page        	
 	 */
 	protected function redirect($page) {
@@ -64,34 +69,34 @@ class Controller {
 		$this->coreModel->logoutUser ();
 		$this->coreModel->setPageAlert ( "success", LOGOUT_SUCCESS );
 	}
-	
+
 	/**
 	 * Set the message alert through the $_SESSION variable due to the way some pages save and redirects to refresh content.
 	 *
-	 * @param string $category
-	 * @param unknown $message
+	 * @param string $category        	
+	 * @param unknown $message        	
 	 */
 	protected function setSessionMessageAlert($category = "default", $message) {
 		$_SESSION ['alert_message_category'] = $category;
 		$_SESSION ['alert_message'] = $message;
 	}
-	
+
 	/**
 	 * Extracts an alert message and category from the $_SESSION variable and sets the model page alert with it.
 	 * Necessary due to how the some pages handle redirects to refresh content.
 	 */
 	protected function getMessageAlertFromSession() {
 		if (isset ( $_SESSION ['alert_message'] )) {
-				
+			
 			$recordCategory = "default";
-				
+			
 			if (isset ( $_SESSION ['alert_message_category'] )) {
 				$recordCategory = $_SESSION ['alert_message_category'];
 			}
-				
+			
 			// set the coremodel with the message
 			$this->coreModel->setPageAlert ( $recordCategory, $_SESSION ['alert_message'] );
-				
+			
 			// unset the session variable record messages after using
 			unset ( $_SESSION ['alert_message_category'] );
 			unset ( $_SESSION ['alert_message'] );

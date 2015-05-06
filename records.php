@@ -7,13 +7,6 @@
  */
 session_start ();
 
-// Get the action if there is one defined
-$action = "";
-
-if (! empty ( $_REQUEST ['action'] )) {
-	$action = $_REQUEST ['action'];
-}
-
 // include the MVC php files
 include "models/CoreModel.php";
 include "models/RecordModel.php";
@@ -26,7 +19,7 @@ $coreModel = new CoreModel ();
 $recordModel = new RecordModel();
 
 // instanciate a new controller by passing in the new model, action and the request
-$controller = new RecordController ( $coreModel, $recordModel, $action, $_REQUEST );
+$controller = new RecordController ( $coreModel, $recordModel, $_REQUEST );
 
 // instanciate a new view by providing the controller and the model
 $view = new RecordView ( $controller, $coreModel, $recordModel );

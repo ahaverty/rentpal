@@ -10,8 +10,8 @@ class IndexController extends Controller {
 	 * @param string $action        	
 	 * @param unknown $parameters        	
 	 */
-	public function __construct($coreModel, $action = null, $parameters) {
-		parent::__construct ( $coreModel, $action, $parameters );
+	public function __construct($coreModel, $parameters) {
+		parent::__construct ( $coreModel, $parameters );
 		
 		switch ($this->action) {
 			case "insertNewUser" :

@@ -11,8 +11,8 @@ class RecordController extends Controller {
 	 * @param string $action        	
 	 * @param unknown $parameters        	
 	 */
-	public function __construct(CoreModel $userModel, RecordModel $recordModel, $action = null, $parameters) {
-		parent::__construct ( $userModel, $action, $parameters );
+	public function __construct(CoreModel $userModel, RecordModel $recordModel, $parameters) {
+		parent::__construct ( $userModel, $parameters );
 		
 		if ($userModel->isUserLoggedIn () == false) {
 			$this->setSessionMessageAlert ( "warning", NOT_LOGGED_IN );

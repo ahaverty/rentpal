@@ -1,7 +1,7 @@
 <?php
 
 /**
- * a basic implementation of a database manager for connecting, executing and closing the connection
+ * Basic implementation of a database manager for connecting, executing and closing the connection
  */
 class DbManager {
 	private $dbLink;
