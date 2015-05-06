@@ -62,7 +62,7 @@ class CoreModel {
 	 * @return NULL
 	 */
 	public function getUserPasswordDigest($username) {
-		return ($this->appUserDao->getUserPasswordDigest ( $username ));
+		return ($this->appUserDao->getUserPasswordDigest ( mysql_escape_string($username) ));
 	}
 
 	/**
@@ -72,7 +72,7 @@ class CoreModel {
 	 * @return boolean
 	 */
 	public function getUserId($username) {
-		return ($this->appUserDao->getUserId ( $username ));
+		return ($this->appUserDao->getUserId ( mysql_escape_string($username) ));
 	}
 
 	/**
@@ -153,7 +153,7 @@ class CoreModel {
 	 * @return string
 	 */
 	public function insertNewUser($username, $hashedPassword, $email) {
-		return ($this->appUserDao->insertNewUser ( $username, $hashedPassword, $email ));
+		return ($this->appUserDao->insertNewUser ( mysql_escape_string($username), $hashedPassword, mysql_escape_string($email) ));
 	}
 
 	/**

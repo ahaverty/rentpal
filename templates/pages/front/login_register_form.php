@@ -18,10 +18,10 @@
 				<form id="login-form" action="index.php" method="post" role="form" style="display: block;">
 					<input id='action' type='hidden' name='action' value='loginUser' />
 					<div class="form-group">
-						<input type="text" name="fUser" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+						<input type="text" name="fUser" id="username" tabindex="1" class="form-control" placeholder="Username" required>
 					</div>
 					<div class="form-group">
-						<input type="password" name="fPassword" id="password" tabindex="2" class="form-control" placeholder="Password">
+						<input type="password" name="fPassword" id="password" tabindex="2" class="form-control" placeholder="Password" required>
 					</div>
 					<div class="form-group">
 						<div class="row">

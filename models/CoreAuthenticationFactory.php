@@ -22,7 +22,7 @@ class CoreAuthenticationFactory {
 	 * @param string $username
 	 */
 	public function isUserExisting($username) {
-		return ($this->appUserDao->isUserExisting ( $username ));
+		return ($this->appUserDao->isUserExisting ( mysql_escape_string($username) ));
 	}
 
 	/**

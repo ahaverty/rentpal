@@ -40,7 +40,7 @@ class IndexController extends Controller {
 		if (! empty ( $username ) && ! empty ( $password ) && ! empty ( $email )) {
 			if ($this->coreModel->validationFactory->isLengthStringValid ( $username, NEW_USER_FORM_MAX_USERNAME_LENGTH ) && $this->coreModel->validationFactory->isLengthStringValid ( $password, NEW_USER_FORM_MAX_PASSWORD_LENGTH ) && $this->coreModel->validationFactory->isEmailValid ( $email )) {
 				
-				if (! $this->coreModel->authenticationFactory->isUserExisting ( $username )) {
+				if (! $this->coreModel->coreAuthenticationFactory->isUserExisting ( $username )) {
 					
 					$hashedPassword = $this->coreModel->coreAuthenticationFactory->getHashValue ( $password );
 					
