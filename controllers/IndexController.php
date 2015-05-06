@@ -15,10 +15,10 @@ class IndexController extends Controller {
 		
 		switch ($this->action) {
 			case "insertNewUser" :
-				$this->insertNewUser ( $this->parameters );
+				$this->insertNewUser ();
 				break;
 			case "loginUser" :
-				$this->loginUser ( $this->parameters );
+				$this->loginUser ();
 				break;
 			default :
 				break;
@@ -32,10 +32,10 @@ class IndexController extends Controller {
 	 * @param : $parameters
 	 *        	- array containing the parameters to be validated
 	 */
-	function insertNewUser($parameters) {
-		$email = $parameters ["fEmail"];
-		$username = $parameters ["fUsername"];
-		$password = $parameters ["fPassword"];
+	function insertNewUser() {
+		$email = $this->parameters ["fEmail"];
+		$username = $this->parameters ["fUsername"];
+		$password = $this->parameters ["fPassword"];
 		
 		if (! empty ( $username ) && ! empty ( $password ) && ! empty ( $email )) {
 			if ($this->coreModel->validationFactory->isLengthStringValid ( $username, NEW_USER_FORM_MAX_USERNAME_LENGTH ) && $this->coreModel->validationFactory->isLengthStringValid ( $password, NEW_USER_FORM_MAX_PASSWORD_LENGTH ) && $this->coreModel->validationFactory->isEmailValid ( $email )) {
@@ -76,9 +76,9 @@ class IndexController extends Controller {
 	 *        	- array containing the parameters to be validated.
 	 *        	This is the $_REQUEST super global array.
 	 */
-	function loginUser($parameters) {
-		$username = $parameters ["fUser"];
-		$password = $parameters ["fPassword"];
+	function loginUser() {
+		$username = $this->parameters ["fUser"];
+		$password = $this->parameters ["fPassword"];
 		
 		if (! (empty ( $username ) && empty ( $password ))) {
 			if ($this->coreModel->validationFactory->isLengthStringValid ( $username, NEW_USER_FORM_MAX_USERNAME_LENGTH ) && $this->coreModel->validationFactory->isLengthStringValid ( $password, NEW_USER_FORM_MAX_PASSWORD_LENGTH )) {

@@ -3,7 +3,7 @@
 /**
  * Handles the credential data for the project
  */
-class AuthenticationFactory {
+class CoreAuthenticationFactory {
 	private $appUserDao;
 
 	/**

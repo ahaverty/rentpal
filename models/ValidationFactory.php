@@ -34,6 +34,16 @@ class ValidationFactory {
 				return (true);
 		return (false);
 	}
+	
+	/**
+	 * Verifies whether a query is valid or not
+	 * @param unknown $searchQuery
+	 * @return boolean
+	 */
+	public function isQueryValid($searchQuery) {
+		//TODO implement check for search query @alanhave
+		return true;
+	}
 
 }
 ?>

@@ -41,4 +41,5 @@ define ( "RECORD_EDIT_SUCCESS", "<strong>Success: </strong>Record has been edite
 define ( "RECORD_EDIT_ERROR", "<strong>Error: </strong>There was an error while trying to edit your record." );
 define ( "RECORD_DELETE_SUCCESS", "<strong>Success: </strong>Your record was deleted!" );
 define ( "RECORD_DELETE_ERROR", "<strong>Error: </strong>There was an error while trying to delete your record." );
+define ( "RECORD_SEARCH_INVALID", "<strong>Error: </strong>There was an error with your search, please try again.")
 ?>

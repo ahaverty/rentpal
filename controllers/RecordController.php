@@ -3,6 +3,7 @@ require_once 'Controller.php';
 
 class RecordController extends Controller {
 	private $recordModel;
+	private $userId;
 
 	/**
 	 * RecordsController Construct calls parent construct and controls which action to use.
@@ -22,20 +23,26 @@ class RecordController extends Controller {
 		}
 		
 		$this->recordModel = $recordModel;
-		
-		$this->recordModel->setRecordList ( $_SESSION ['user_id'] );
+		$this->userId = $_SESSION ['user_id'];
 		
 		switch ($this->action) {
 			case "insertNewRecord" :
-				$this->insertNewRecord ( $this->parameters );
+				$this->insertNewRecord ();
+				$this->recordModel->setRecordListWithAll ( $this->userId );
 				break;
 			case "editRecord" :
-				$this->editRecord ( $this->parameters );
+				$this->editRecord ();
+				$this->recordModel->setRecordListWithAll ( $this->userId );
 				break;
 			case "deleteRecord" :
-				$this->deleteRecord ( $this->parameters );
+				$this->deleteRecord ();
+				$this->recordModel->setRecordListWithAll ( $this->userId );
+				break;
+			case "searchRecords" :
+				$this->searchRecords ();
 				break;
 			default :
+				$this->recordModel->setRecordListWithAll ( $this->userId );
 				break;
 		}
 	}
@@ -46,15 +53,13 @@ class RecordController extends Controller {
 	 * @param unknown $parameters        	
 	 * @return boolean
 	 */
-	function insertNewRecord($parameters) {
-		$recordText = $parameters ['record_text'];
+	function insertNewRecord() {
+		$recordText = $this->parameters ['record_text'];
 		
 		if (! empty ( $recordText )) {
 			
 			if ($this->recordModel->insertTextRecord ( $_SESSION ['user_id'], $recordText )) {
-				// set the session var with the success message and redirect the page to refresh content
-				$this->setSessionMessageAlert ( "success", RECORD_INSERT_SUCCESS );
-				$this->redirect ( "records.php" );
+				$this->coreModel->setPageAlert ( "success", RECORD_INSERT_SUCCESS );
 			} else {
 				$this->coreModel->setPageAlert ( "danger", RECORD_INSERT_ERROR );
 			}
@@ -71,16 +76,15 @@ class RecordController extends Controller {
 	 * @param unknown $parameters        	
 	 * @return boolean
 	 */
-	function editRecord($parameters) {
-		$recordId = $parameters ['record_id'];
-		$recordText = $parameters ['record_text'];
+	function editRecord() {
+		$recordId = $this->parameters ['record_id'];
+		$recordText = $this->parameters ['record_text'];
 		
 		if (! empty ( $recordText )) {
-			if ($this->recordModel->verifyUserOwnsRecord ( $_SESSION ['user_id'], $recordId )) {
+			if ($this->recordModel->recordAuthenticationFactory->verifyUserOwnsRecord ( $_SESSION ['user_id'], $recordId )) {
 				
 				if ($this->recordModel->editTextRecord ( $recordId, $recordText )) {
-					$this->setSessionMessageAlert ( "success", RECORD_EDIT_SUCCESS );
-					$this->redirect ( "records.php" );
+					$this->coreModel->setPageAlert ( "success", RECORD_EDIT_SUCCESS );
 				} else {
 					$this->coreModel->setPageAlert ( "danger", RECORD_EDIT_ERROR );
 				}
@@ -99,19 +103,28 @@ class RecordController extends Controller {
 	 *
 	 * @param unknown $parameters        	
 	 */
-	function deleteRecord($parameters) {
+	function deleteRecord() {
+		$recordId = $this->parameters ['record_id'];
 		
-		$recordId = $parameters ['record_id'];
-		
-		if ($this->recordModel->verifyUserOwnsRecord ( $_SESSION ['user_id'], $recordId )) {
+		if ($this->recordModel->recordAuthenticationFactory->verifyUserOwnsRecord ( $_SESSION ['user_id'], $recordId )) {
 			if ($this->recordModel->deleteTextRecord ( $recordId )) {
-				$this->setSessionMessageAlert ( "success", RECORD_DELETE_SUCCESS );
-				$this->redirect ( "records.php" );
+				$this->coreModel->setPageAlert ( "success", RECORD_DELETE_SUCCESS );
 			} else {
 				$this->coreModel->setPageAlert ( "danger", RECORD_DELETE_ERROR );
 			}
 		} else {
 			$this->coreModel->setPageAlert ( "danger", RECORD_DELETE_ERROR );
+		}
+	}
+
+	function searchRecords() {
+		$searchQuery = $this->parameters ['record_search_query'];
+		
+		// TODO implement validation function for search query @alanhave
+		if ($this->recordModel->validationFactory->isQueryValid ( $searchQuery )) {
+			$this->recordModel->setRecordListWithSearchQuery ( $this->userId, $searchQuery );
+		} else {
+			$this->coreModel->setPageAlert ( "danger", RECORD_SEARCH_INVALID );
 		}
 	}
 

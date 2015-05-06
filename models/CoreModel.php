@@ -6,7 +6,7 @@
 include_once './conf/config.inc.php';
 include_once './db/DaoFactory.php';
 include_once 'ValidationFactory.php';
-include_once 'AuthenticationFactory.php';
+include_once 'CoreAuthenticationFactory.php';
 
 /**
  * Model class that defines the data used in the View and Controller classes
@@ -16,7 +16,7 @@ class CoreModel {
 	// factories
 	public $daoFactory;
 	public $validationFactory;
-	public $authenticationFactory;
+	public $coreAuthenticationFactory;
 	
 	// DAOs
 	private $appUserDao;
@@ -39,7 +39,7 @@ class CoreModel {
 		$this->daoFactory = new DaoFactory ();
 		$this->daoFactory->initDbResources ();
 		$this->appUserDao = $this->daoFactory->getAppUserDao ();
-		$this->authenticationFactory = new AuthenticationFactory ( $this->appUserDao );
+		$this->coreAuthenticationFactory = new CoreAuthenticationFactory ( $this->appUserDao );
 		$this->validationFactory = new ValidationFactory ();
 		$this->appName = APP_NAME;
 		$this->baseUrl = "http://" . BASE_URL;
@@ -52,7 +52,7 @@ class CoreModel {
 	 * @param string $username        	
 	 */
 	public function loginUser($userID, $username) {
-		$this->authenticationFactory->loginUser ( $userID, $username );
+		$this->coreAuthenticationFactory->loginUser ( $userID, $username );
 	}
 
 	/**
@@ -160,14 +160,14 @@ class CoreModel {
 	 * Logs out a user using the authentication factory
 	 */
 	public function logoutUser() {
-		$this->authenticationFactory->logoutUser ();
+		$this->coreAuthenticationFactory->logoutUser ();
 	}
 
 	/**
 	 * Checks if a user is logged in using the authentication factory
 	 */
 	public function isUserLoggedIn() {
-		return ($this->authenticationFactory->isUserLoggedIn ());
+		return ($this->coreAuthenticationFactory->isUserLoggedIn ());
 	}
 
 	public function __destruct() {

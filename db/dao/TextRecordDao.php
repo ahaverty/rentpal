@@ -80,6 +80,30 @@ class TextRecordDao extends BaseDao {
 	}
 
 	/**
+	 * Get all records for user filtered by the search query
+	 * 
+	 * @param unknown $appUserId        	
+	 * @param unknown $searchQuery        	
+	 * @return Ambigous <NULL, unknown>
+	 */
+	public function getFilteredRecordsForUser($appUserId, $searchQuery) {
+		$record = NULL;
+		
+		$sqlQuery = "SELECT * ";
+		$sqlQuery .= "FROM $this->table_TextRecord ";
+		$sqlQuery .= "WHERE $this->col_appUserId='$appUserId' ";
+		$sqlQuery .= "AND $this->col_text LIKE '%" . $searchQuery . "%' ";
+		$sqlQuery .= "ORDER BY $this->col_timestamp DESC";
+		
+		$result = $this->dbManager->executeSelectQuery ( $sqlQuery );
+		
+		if ($result != NULL) {
+			$record = $result;
+		}
+		return ($record);
+	}
+
+	/**
 	 * Insert a new text record
 	 *
 	 * @param unknown $appUserId        	
@@ -123,8 +147,9 @@ class TextRecordDao extends BaseDao {
 
 	/**
 	 * Check whether an app user owns the provided record
-	 * @param unknown $userId
-	 * @param unknown $recordId
+	 * 
+	 * @param unknown $userId        	
+	 * @param unknown $recordId        	
 	 * @return boolean
 	 */
 	public function isUserTheRecordOwner($userId, $recordId) {

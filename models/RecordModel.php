@@ -1,6 +1,8 @@
 <?php
 include_once './conf/config.inc.php';
 include_once './db/DaoFactory.php';
+include_once 'RecordAuthenticationFactory.php';
+include_once 'ValidationFactory.php';
 
 /**
  * Model class that defines the data used in the View and Controller classes
@@ -8,7 +10,10 @@ include_once './db/DaoFactory.php';
 class RecordModel {
 	private $recordList = "";
 	private $textRecordDao;
-
+	
+	public $recordAuthenticationFactory;
+	public $validationFactory;
+	
 	/**
 	 * Construct for Model class for setting up variables and factories.
 	 */
@@ -16,6 +21,8 @@ class RecordModel {
 		$this->daoFactory = new DaoFactory ();
 		$this->daoFactory->initDbResources ();
 		$this->textRecordDao = $this->daoFactory->getTextRecordDao ();
+		$this->recordAuthenticationFactory = new RecordAuthenticationFactory ( $this->textRecordDao );
+		$this->validationFactory = new ValidationFactory();
 	}
 
 	/**
@@ -23,8 +30,12 @@ class RecordModel {
 	 *
 	 * @param unknown $appUserId        	
 	 */
-	public function setRecordList($appUserId) {
+	public function setRecordListWithAll($appUserId) {
 		$this->recordList = $this->textRecordDao->getAllRecordsForUser ( $appUserId );
+	}
+	
+	public function setRecordListWithSearchQuery($appUserId, $searchQuery) {
+		$this->recordList = $this->textRecordDao->getFilteredRecordsForUser ( $appUserId, $searchQuery );
 	}
 	
 	/**
@@ -62,21 +73,6 @@ class RecordModel {
 	 */
 	public function deleteTextRecord($recordId) {
 		return $this->textRecordDao->deleteRecord ( $recordId );
-	}
-
-	/**
-	 * Verify whether a user owns a record or not
-	 *
-	 * @param unknown $userId        	
-	 * @param unknown $recordId        	
-	 * @return boolean
-	 */
-	public function verifyUserOwnsRecord($userId, $recordId) {
-		if ($this->textRecordDao->isUserTheRecordOwner( $userId, $recordId )) {
-			return (true);
-		} else {
-			return (false);
-		}
 	}
 
 	public function __destruct() {
