@@ -38,7 +38,7 @@ class RecordController extends Controller {
 				$this->deleteRecord ();
 				$this->recordModel->setRecordListWithAll ( $this->userId );
 				break;
-			case "searchRecords" :
+			case "search" :
 				$this->searchRecords ();
 				break;
 			default :
@@ -49,9 +49,6 @@ class RecordController extends Controller {
 
 	/**
 	 * Inserts a new text record for the user
-	 *
-	 * @param unknown $parameters        	
-	 * @return boolean
 	 */
 	function insertNewRecord() {
 		$recordText = $this->parameters ['record_text'];
@@ -72,9 +69,6 @@ class RecordController extends Controller {
 
 	/**
 	 * Edit an existing record with the provided text and record_id
-	 *
-	 * @param unknown $parameters        	
-	 * @return boolean
 	 */
 	function editRecord() {
 		$recordId = $this->parameters ['record_id'];
@@ -100,8 +94,6 @@ class RecordController extends Controller {
 
 	/**
 	 * Delete a record with the provided record_id
-	 *
-	 * @param unknown $parameters        	
 	 */
 	function deleteRecord() {
 		$recordId = $this->parameters ['record_id'];
@@ -117,14 +109,18 @@ class RecordController extends Controller {
 		}
 	}
 
+	/**
+	 * Searches for specific records containing the provided query
+	 */
 	function searchRecords() {
-		$searchQuery = $this->parameters ['record_search_query'];
+		$searchQuery = $this->parameters ['query'];
 		
-		// TODO implement validation function for search query @alanhave
 		if ($this->recordModel->validationFactory->isQueryValid ( $searchQuery )) {
 			$this->recordModel->setRecordListWithSearchQuery ( $this->userId, $searchQuery );
+			$this->coreModel->setPageAlert ( "success", RECORD_SEARCH_SUCCESS );
 		} else {
 			$this->coreModel->setPageAlert ( "danger", RECORD_SEARCH_INVALID );
+			$this->recordModel->setRecordListWithAll ( $this->userId );
 		}
 	}
 

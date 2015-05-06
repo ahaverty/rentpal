@@ -10,10 +10,9 @@ include_once 'ValidationFactory.php';
 class RecordModel {
 	private $recordList = "";
 	private $textRecordDao;
-	
 	public $recordAuthenticationFactory;
 	public $validationFactory;
-	
+
 	/**
 	 * Construct for Model class for setting up variables and factories.
 	 */
@@ -22,7 +21,7 @@ class RecordModel {
 		$this->daoFactory->initDbResources ();
 		$this->textRecordDao = $this->daoFactory->getTextRecordDao ();
 		$this->recordAuthenticationFactory = new RecordAuthenticationFactory ( $this->textRecordDao );
-		$this->validationFactory = new ValidationFactory();
+		$this->validationFactory = new ValidationFactory ();
 	}
 
 	/**
@@ -33,16 +32,23 @@ class RecordModel {
 	public function setRecordListWithAll($appUserId) {
 		$this->recordList = $this->textRecordDao->getAllRecordsForUser ( $appUserId );
 	}
-	
+
+	/**
+	 * Set the record list to the results of the search
+	 * 
+	 * @param unknown $appUserId        	
+	 * @param unknown $searchQuery        	
+	 */
 	public function setRecordListWithSearchQuery($appUserId, $searchQuery) {
-		$this->recordList = $this->textRecordDao->getFilteredRecordsForUser ( $appUserId, $searchQuery );
+		$this->recordList = $this->textRecordDao->getFilteredRecordsForUser ( $appUserId, mysql_escape_string ( $searchQuery ) );
 	}
-	
+
 	/**
 	 * Return the models list of records
+	 *
 	 * @return string
 	 */
-	public function getRecordList(){
+	public function getRecordList() {
 		return $this->recordList;
 	}
 

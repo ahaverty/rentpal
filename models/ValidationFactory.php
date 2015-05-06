@@ -41,8 +41,17 @@ class ValidationFactory {
 	 * @return boolean
 	 */
 	public function isQueryValid($searchQuery) {
-		//TODO implement check for search query @alanhave
-		return true;
+		$regex = "/^[a-zA-Z0-9_ ]*$/";
+		
+		if(strlen($searchQuery) > 1){
+		
+			if (! preg_match ( $regex, $searchQuery ))
+				return (false);
+			else
+				return (true);
+		} else {
+			return (false);
+		}
 	}
 
 }
