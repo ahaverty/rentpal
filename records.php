@@ -5,7 +5,7 @@
  * The $_SESSION superglobal array can contain variable
  * accessible accross the entire session
  */
-session_start ();
+
 
 // include the MVC php files
 include "models/CoreModel.php";
@@ -15,7 +15,6 @@ include "views/RecordView.php";
 
 // instanciate a new model
 $coreModel = new CoreModel ();
-
 $recordModel = new RecordModel();
 
 // instanciate a new controller by passing in the new model, action and the request

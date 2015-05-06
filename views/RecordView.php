@@ -10,7 +10,7 @@ class RecordView extends View {
 	}
 
 	public function output() {
-		$recordList = $this->recordModel->recordList;
+		$recordList = $this->recordModel->getRecordList();
 		$articlesHtml = "";
 		
 		$article_template = file_get_contents ( './templates/pages/records/article_template.php' );

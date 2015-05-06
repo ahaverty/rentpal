@@ -45,17 +45,11 @@ class IndexController extends Controller {
 					$hashedPassword = $this->coreModel->authenticationFactory->getHashValue ( $password );
 					
 					if ($this->coreModel->insertNewUser ( $username, $hashedPassword, $email )) {
+						
 						$this->coreModel->setloginRegisterAlert ( "success", NEW_USER_FORM_REGISTRATION_CONFIRMATION_STR );
 						
-						// Setup sample records for when a new user first joins
-						include "models/RecordModel.php";
-						$recordModel = new RecordModel ();
-						
-						$userId = $this->coreModel->getUserId ( $username );
-						
-						$recordModel->insertTextRecord ( $userId, DEFAULT_RECORD_1 );
-						$recordModel->insertTextRecord ( $userId, DEFAULT_RECORD_2 );
-						$recordModel->insertTextRecord ( $userId, DEFAULT_RECORD_3 );
+						// Set the new user with some sample records in the db
+						$this->setupSampleRecords($username);
 						
 						return (true);
 					}
@@ -104,6 +98,22 @@ class IndexController extends Controller {
 		}
 		$this->coreModel->setloginRegisterAlert ( "danger", LOGIN_USER_FORM_AUTHENTICATION_ERROR );
 		return;
+	}
+	
+	/**
+	 * Setup sample records for a new registered user
+	 */
+	private function setupSampleRecords($username) {
+		
+		// Setup sample records for when a new user first joins
+		include "models/RecordModel.php";
+		$recordModel = new RecordModel ();
+		
+		$userId = $this->coreModel->getUserId ( $username );
+		
+		$recordModel->insertTextRecord ( $userId, DEFAULT_RECORD_1 );
+		$recordModel->insertTextRecord ( $userId, DEFAULT_RECORD_2 );
+		$recordModel->insertTextRecord ( $userId, DEFAULT_RECORD_3 );
 	}
 
 }

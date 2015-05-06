@@ -11,10 +11,12 @@ class RecordController extends Controller {
 	 * @param string $action        	
 	 * @param unknown $parameters        	
 	 */
-	public function __construct(CoreModel $userModel, RecordModel $recordModel, $parameters) {
-		parent::__construct ( $userModel, $parameters );
+	public function __construct(CoreModel $coreModel, RecordModel $recordModel, $parameters) {
+		parent::__construct ( $coreModel, $parameters );
 		
-		if ($userModel->isUserLoggedIn () == false) {
+		if ($this->coreModel->isUserLoggedIn () == false) {
+			// if the user is not logged in, set the session var with
+			// a warning message and redirect the user to the index page
 			$this->setSessionMessageAlert ( "warning", NOT_LOGGED_IN );
 			$this->redirect ( "index.php" );
 		}
@@ -50,6 +52,7 @@ class RecordController extends Controller {
 		if (! empty ( $recordText )) {
 			
 			if ($this->recordModel->insertTextRecord ( $_SESSION ['user_id'], $recordText )) {
+				// set the session var with the success message and redirect the page to refresh content
 				$this->setSessionMessageAlert ( "success", RECORD_INSERT_SUCCESS );
 				$this->redirect ( "records.php" );
 			} else {
@@ -64,7 +67,7 @@ class RecordController extends Controller {
 
 	/**
 	 * Edit an existing record with the provided text and record_id
-	 * 
+	 *
 	 * @param unknown $parameters        	
 	 * @return boolean
 	 */
@@ -73,10 +76,14 @@ class RecordController extends Controller {
 		$recordText = $parameters ['record_text'];
 		
 		if (! empty ( $recordText )) {
-			
-			if ($this->recordModel->editTextRecord ( $recordId, $recordText )) {
-				$this->setSessionMessageAlert ( "success", RECORD_EDIT_SUCCESS );
-				$this->redirect ( "records.php" );
+			if ($this->recordModel->verifyUserOwnsRecord ( $_SESSION ['user_id'], $recordId )) {
+				
+				if ($this->recordModel->editTextRecord ( $recordId, $recordText )) {
+					$this->setSessionMessageAlert ( "success", RECORD_EDIT_SUCCESS );
+					$this->redirect ( "records.php" );
+				} else {
+					$this->coreModel->setPageAlert ( "danger", RECORD_EDIT_ERROR );
+				}
 			} else {
 				$this->coreModel->setPageAlert ( "danger", RECORD_EDIT_ERROR );
 			}
@@ -94,13 +101,15 @@ class RecordController extends Controller {
 	 */
 	function deleteRecord($parameters) {
 		
-		// TODO Documented that the hidden inputs containing the record_id could potentially be messed with,
-		// resulting in any record to be deleted
 		$recordId = $parameters ['record_id'];
 		
-		if ($this->recordModel->deleteTextRecord ( $recordId )) {
-			$this->setSessionMessageAlert ( "success", RECORD_DELETE_SUCCESS );
-			$this->redirect ( "records.php" );
+		if ($this->recordModel->verifyUserOwnsRecord ( $_SESSION ['user_id'], $recordId )) {
+			if ($this->recordModel->deleteTextRecord ( $recordId )) {
+				$this->setSessionMessageAlert ( "success", RECORD_DELETE_SUCCESS );
+				$this->redirect ( "records.php" );
+			} else {
+				$this->coreModel->setPageAlert ( "danger", RECORD_DELETE_ERROR );
+			}
 		} else {
 			$this->coreModel->setPageAlert ( "danger", RECORD_DELETE_ERROR );
 		}

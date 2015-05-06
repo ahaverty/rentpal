@@ -36,7 +36,7 @@ class TextRecordDao extends BaseDao {
 
 	/**
 	 * Get a single record for a user with the provided record id and app user id
-	 * 
+	 *
 	 * @param unknown $appUserId        	
 	 * @param unknown $recordId        	
 	 * @return Ambigous <NULL, unknown>
@@ -59,7 +59,7 @@ class TextRecordDao extends BaseDao {
 
 	/**
 	 * Get all text records for a user
-	 * 
+	 *
 	 * @param unknown $appUserId        	
 	 * @return <recordId, recordText>
 	 */
@@ -81,7 +81,7 @@ class TextRecordDao extends BaseDao {
 
 	/**
 	 * Insert a new text record
-	 * 
+	 *
 	 * @param unknown $appUserId        	
 	 * @param unknown $text        	
 	 * @return unknown
@@ -95,7 +95,7 @@ class TextRecordDao extends BaseDao {
 
 	/**
 	 * Edit an existing text record
-	 * 
+	 *
 	 * @param unknown $recordId        	
 	 * @param unknown $text        	
 	 * @return unknown
@@ -110,7 +110,7 @@ class TextRecordDao extends BaseDao {
 
 	/**
 	 * Delete an existing text record
-	 * 
+	 *
 	 * @param unknown $recordId        	
 	 * @return unknown
 	 */
@@ -119,6 +119,26 @@ class TextRecordDao extends BaseDao {
 		$sqlQuery .= "WHERE " . $this->col_recordId . " = " . $recordId;
 		$result = $this->dbManager->executeQuery ( $sqlQuery );
 		return $result;
+	}
+
+	/**
+	 * Check whether an app user owns the provided record
+	 * @param unknown $userId
+	 * @param unknown $recordId
+	 * @return boolean
+	 */
+	public function isUserTheRecordOwner($userId, $recordId) {
+		$sqlQuery = "SELECT count(*) as isExisting ";
+		$sqlQuery .= "FROM $this->table_TextRecord ";
+		$sqlQuery .= "WHERE $this->col_recordId='$recordId' ";
+		$sqlQuery .= "AND $this->col_appUserId='$userId' ";
+		
+		$result = $this->dbManager->executeSelectQuery ( $sqlQuery );
+		
+		if ($result [0] ["isExisting"] == 1)
+			return (true);
+		else
+			return (false);
 	}
 
 }

@@ -20,6 +20,9 @@ class Controller {
 	 * @param unknown $parameters        	
 	 */
 	public function __construct(CoreModel $coreModel, $parameters) {
+		
+		session_start ();
+		
 		$this->coreModel = $coreModel;
 		$this->parameters = $parameters;
 		

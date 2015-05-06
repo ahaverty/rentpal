@@ -5,7 +5,6 @@
  * The $_SESSION superglobal array can contain variable
  * accessible accross the entire session
  */
-session_start ();
 
 // include the MVC php files
 include "models/CoreModel.php";
