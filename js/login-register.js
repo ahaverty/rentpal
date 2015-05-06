@@ -1,3 +1,5 @@
+//Login form javascript, html template and css taken from http://bootsnipp.com/snippets/z1Bpy
+
 $(function() {
 
     $('#login-form-link').click(function(e) {

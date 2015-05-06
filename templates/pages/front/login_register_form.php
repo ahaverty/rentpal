@@ -1,3 +1,4 @@
+<!-- Login form javascript, html template and css taken from http://bootsnipp.com/snippets/z1Bpy -->
 <div class="panel panel-login">
 	<div class="panel-heading">
 		<div class="row">

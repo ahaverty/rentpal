@@ -1,12 +1,4 @@
 <?php
-/*
- * Creates a session or resumes the current one based on a session identifier
- * passed via a GET or POST request, or passed via a cookie.
- * The $_SESSION superglobal array can contain variable
- * accessible accross the entire session
- */
-
-
 // include the MVC php files
 include "models/CoreModel.php";
 include "models/RecordModel.php";
